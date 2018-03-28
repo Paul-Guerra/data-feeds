@@ -3,9 +3,12 @@ const path = require('path');
 module.exports = {
   mode: 'development',
   devtool: 'source-map',
-  entry: './dist/index.js',
+  entry: {
+    main: './dist/index.js',
+    'event-scheduler.worker': './dist/workers/event-scheduler.worker.js'
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
+    filename: '[name].bundle.js'
   }
 };
