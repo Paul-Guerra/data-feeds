@@ -1,0 +1,51 @@
+{
+  "name": "react-redux-skeleton",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "postinstall": "mkdir -p dist/",
+    "clean": "rm -rf dist/*",
+    "build": "npm run clean && npm run babel && cp src/index.html dist/index.html && npm run webpack",
+    "dev": "npm run build && npm run watch:js",
+    "babel": "babel src/ --out-dir dist/  --ignore **/__*__/**",
+    "babel:watch": "babel src/ --out-dir dist/ --ignore **/__*__/** --watch",
+    "watch:js": "npm run babel:watch & npm run webpack:watch",
+    "webpack": "webpack",
+    "webpack:watch": "webpack --watch",
+    "test": "jest",
+    "test:debug": "echo  \"Visit \\033[1;36mchrome://inspect\\033[0m then wait for your \\033[1;33mdebugger;\\033[0m statement to trigger\" && node --inspect-brk node_modules/.bin/jest $1",
+    "lint": "eslint src/**/*.js*",
+    "lint:fix": "eslint src/**/*.js* --fix",
+    "lint:watch": "watch 'npm run lint' src/**/*.js*"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-node6": "^11.0.0",
+    "babel-preset-react": "^6.24.1",
+    "enzyme": "^3.3.0",
+    "eslint": "^4.18.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-babel": "^4.1.2",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.7.0",
+    "jest": "^22.4.2",
+    "lorem-ipsum": "^1.0.4",
+    "watch": "^1.0.2",
+    "webpack": "^4.1.1",
+    "webpack-cli": "^2.0.11"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "node-fetch": "^2.1.1",
+    "prop-types": "^15.6.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.2.2",
+    "redux": "^3.7.2"
+  }
+}
