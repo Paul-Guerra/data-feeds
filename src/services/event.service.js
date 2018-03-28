@@ -14,7 +14,7 @@ export class EventService {
       this.workerInit.resolve = resolve;
       this.workerInit.reject = reject;
     });
-    this.worker.onmessage = event => this.onMessage(event.data);
+    this.worker.onmessage = event => this.onMessage(event);
   }
   /**
    * Tells worker to run in a specific profile
@@ -23,7 +23,7 @@ export class EventService {
   run(profile) {
     console.log(`EventService.run(${profile})`);
     this.worker.postMessage({ context: 'profile', action: 'stop' });
-    this.worker.postMessage({ context: 'profile', action: 'load', data: { profile } });
+    this.worker.postMessage({ context: 'profile', action: 'load', profile });
     this.worker.postMessage({ context: 'profile', action: 'run' });
   }
 
@@ -31,7 +31,9 @@ export class EventService {
     console.error('[EventScheduler] error', e);
   }
 
-  onMessage(action) {
+  onMessage(event) {
+    console.log(event);
+    let action = event.data;
     switch (action.type) {
       case 'WORKER.READY':
         console.log('WORKER.READY');

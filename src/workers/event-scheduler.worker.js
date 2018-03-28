@@ -1,4 +1,4 @@
-
+/* global self */
 /**
  * DataWorker is resposible for posting messages to it's parent
  * at scheduled intervals according to the current profile loaded.
@@ -8,6 +8,7 @@
  */
 export default class EventScheduler {
   constructor() {
+    console.log('[CONSTRUCTOR]');
     postMessage({ type: 'WORKER.READY' });
   }
 
@@ -32,14 +33,14 @@ const eventScheduler = new EventScheduler();
  * receives messages sent to this worker and
  * call the appropriate method
  */
-const onmessage = (payload) => {
-  let key = `${payload.context}::${payload.action}`;
+self.onmessage = (event) => {
+  let key = `${event.data.context}::${event.data.action}`;
   switch (key) {
     case 'profile::load':
-      eventScheduler.loadProfile();
+      eventScheduler.loadProfile(event.data.profile);
       break;
-    case 'profile::start':
-      eventScheduler.startProfile();
+    case 'profile::run':
+      eventScheduler.runProfile();
       break;
     case 'profile::stop':
       eventScheduler.stopProfile();
