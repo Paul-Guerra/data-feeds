@@ -8,7 +8,7 @@
  */
 export default class EventScheduler {
   constructor() {
-    console.log('[CONSTRUCTOR]');
+    console.log('[EventScheduler] constructor()');
     postMessage({ type: 'WORKER.READY' });
   }
 
