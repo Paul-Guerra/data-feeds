@@ -4,7 +4,6 @@ import init from '../services/event.service';
 let dataService;
 
 const eventMiddle = store => next => (action) => {
-  console.log('event.middle', action);
   switch (action.type) {
     case ACTIONS.APP.READY:
       dataService = init(store.dispatch);

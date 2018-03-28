@@ -7,6 +7,10 @@
  * to similulate push load from external source eg, server push
  */
 export default class EventScheduler {
+  constructor() {
+    postMessage({ type: 'WORKER.READY' });
+  }
+
   loadProfile(name) {
     console.log(`EventScheduler.loadProfile(${name})`);
     return this;

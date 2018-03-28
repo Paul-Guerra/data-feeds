@@ -1,11 +1,12 @@
 {
-  "name": "react-redux-skeleton",
+  "name": "data-feeds",
   "version": "1.0.0",
   "description": "",
   "scripts": {
     "postinstall": "mkdir -p dist/",
     "clean": "rm -rf dist/*",
     "build": "npm run clean && npm run babel && cp src/index.html dist/index.html && npm run webpack",
+    "build:workers": "webpack --config ./webpack-events.config.js",
     "dev": "npm run build && npm run watch:js",
     "babel": "babel src/ --out-dir dist/  --ignore **/__*__/**",
     "babel:watch": "babel src/ --out-dir dist/ --ignore **/__*__/** --watch",
