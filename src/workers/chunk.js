@@ -1,63 +1,59 @@
 // Repeatedly perform a given task until a condition is met
 // broken into chunks of work to be non-blocking
 
-function chunk(job) {
-  let { task, stop } = job;
-  task();
-  if (!stop()) {
-    setTimeout(() => chunk(job), 0);
-  }
-}
+let bigResults = [];
+let smallResults = [];
 
-let results = [];
-
-function doTask() {
+function doTask(results) {
+  // if (results.length === 5) throw Error('My Bad');
   results.push(Date.now());
-  if (results.length === 5) throw Error('My Bad');
-  // console.log(results.length);
+  console.log(results.length);
   return results;
 }
 
-function bigEnough() {
-  return results.length >= 10;
+function isEnough(enough, results) {
+  return results.length >= enough;
 }
 
-function smallEnough() {
-  return results.length >= 300;
+function chunk(job) {
+  let { task, stop } = job;
+  return new Promise((resolve, reject) => {
+    task();
+    if (!stop()) {
+      setTimeout(() => chunk(job), 0);
+    }
+  }).catch((e) => { job.reject(e); });
 }
 
 function doAsyncJob(task, stopWhenTrue) {
-  let resolveJob;
-
-  let job = {
-    task,
-    stop: () => {
-      let shouldStop = stopWhenTrue();
-      if (shouldStop) resolveJob();
-      return shouldStop;
-    }
-  };
-
   return new Promise((resolve, reject) => {
-    resolveJob = resolve;
+    let job = {
+      task,
+      resolve,
+      reject,
+      stop: () => {
+        let shouldStop = stopWhenTrue();
+        if (shouldStop) resolve();
+        return shouldStop;
+      }
+    };
     chunk(job);
-  }).catch(e => console.log('oops', e.message));
+  });
 }
 
+doAsyncJob(() => doTask(bigResults), () => isEnough(30, bigResults))
+  .then(() => console.log('isEnough(30) Done!'))
+  .catch((e) => { console.log('oops', e.message); });
 
-// chunk(doTask, bigEnough).then(() => console.log('bigEnough Done!')).catch(() => console.log('big oops'));
-// let job = makeAsyncJob(doTask, bigEnough);
-// job.promise.then(() => console.log('bigEnough Done!')).catch(() => console.log('big oops'));
-// chunk(job);
-// job.promise.then(() => console.log('bigEnough Done!')).catch(() => console.log('big oops'));
-
-// doAsyncJob(doTask, bigEnough).then(() => console.log('bigEnough Done!')).catch(() => console.log('big oops'));
-
+doAsyncJob(() => doTask(smallResults), () => isEnough(10, smallResults))
+  .then(() => console.log('isEnough(10) Done!'))
+  .catch((e) => { console.log('oops', e.message); });
 
 module.exports = {
   chunk,
   doTask,
-  bigEnough,
-  results,
-  doAsyncJob
+  isEnough,
+  doAsyncJob,
+  bigResults,
+  smallResults
 };
