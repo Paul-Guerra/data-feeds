@@ -18,14 +18,17 @@ function* makeHeadline(prefix = '') {
   }
 }
 
-export function publisher(dispatch) {
-  let headline = makeHeadline();
+export function publisher(name, dispatch) {
+  let headline = makeHeadline(`${name} - `);
   dispatch({
     type: 'HEADLINE.PUBLISH',
+    from: name,
     headline: headline.next()
   });
 }
 
 export default function init(dispatch) {
-  repeat(() => publisher(dispatch));
+  repeat(() => publisher('Daily Planet', dispatch), Infinity, 1000);
+  repeat(() => publisher('Daily Bugle', dispatch), Infinity, 2000);
+  repeat(() => publisher('Gotham Gazette', dispatch), Infinity, 3000);
 }
