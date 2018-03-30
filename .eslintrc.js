@@ -2,7 +2,7 @@ module.exports = {
   "extends": "airbnb",
   "plugins": [],
   "parserOptions": {
-   "ecmaVersion": 6,
+   "ecmaVersion": 2017,
    "sourceType": "module",
    "ecmaFeatures": {
      "experimentalObjectRestSpread": true
