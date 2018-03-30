@@ -27,7 +27,7 @@ export function publisher(name, dispatch) {
   });
 }
 
-export default function init(dispatch) {
+export default function run(dispatch) {
   repeat(() => publisher('Daily Planet', dispatch), Infinity, 1000);
   repeat(() => publisher('Daily Bugle', dispatch), Infinity, 2000);
   repeat(() => publisher('Gotham Gazette', dispatch), Infinity, 3000);

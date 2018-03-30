@@ -3,9 +3,9 @@ import 'babel-polyfill';
 import run from './default.profile';
 
 /**
- * DataWorker is resposible for posting messages to it's parent
+ * EventScheduler is resposible for posting messages to it's parent
  * at scheduled intervals according to the current profile loaded.
- * The DataWorker is running in its own event loop as a WebWorker
+ * The EventScheduler is running in its own event loop as a WebWorker
  * so that it's timer is independent as possible from it's parent process
  * to similulate push load from external source eg, server push
  */
