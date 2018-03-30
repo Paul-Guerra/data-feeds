@@ -1,4 +1,7 @@
-/* global self */
+/* global self, postMessage */
+import 'babel-polyfill';
+import run from './default.profile';
+
 /**
  * DataWorker is resposible for posting messages to it's parent
  * at scheduled intervals according to the current profile loaded.
@@ -19,6 +22,7 @@ export default class EventScheduler {
   
   runProfile() {
     console.log('EventScheduler.runProfile()');
+    run(postMessage);
     return this;
   }
 
