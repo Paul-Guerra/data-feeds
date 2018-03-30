@@ -1,10 +1,11 @@
 // Repeatedly perform a given task until a condition is met
 // broken into chunks of work to be non-blocking
 
-function chunk(task, isDone) {
+function chunk(job) {
+  let { task, stop } = job;
   task();
-  if (!isDone()) {
-    setTimeout(() => chunk(task, isDone), 0);
+  if (!stop()) {
+    setTimeout(() => chunk(job), 0);
     return;
   }
   console.log('Done!');
@@ -14,6 +15,7 @@ let results = [];
 
 function doTask() {
   results.push(Date.now());
+  // if (results.length === 5) throw Error('foo');
   console.log(results.length);
   return results;
 }
@@ -33,6 +35,7 @@ function makeAsyncJob(task, stopWhenTrue) {
     resolveJob = resolve;
     rejectJob = reject;
   });
+
   return {
     promise,
     task,
@@ -47,7 +50,7 @@ function makeAsyncJob(task, stopWhenTrue) {
 // chunk(doTask, bigEnough).then(() => console.log('bigEnough Done!')).catch(() => console.log('big oops'));
 // let job = makeAsyncJob(doTask, bigEnough);
 // job.promise.then(() => console.log('bigEnough Done!')).catch(() => console.log('big oops'));
-// chunk(job.task, job.stop);
+// chunk(job);
 // job.promise.then(() => console.log('bigEnough Done!')).catch(() => console.log('big oops'));
 
 module.exports = {
