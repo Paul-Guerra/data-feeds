@@ -1,5 +1,5 @@
 import loremIpsum from 'lorem-ipsum';
-import repeat from './repeat';
+import repeat from '../utils/repeat';
 
 function* makeHeadline(prefix = '') {
   let id = 1;
