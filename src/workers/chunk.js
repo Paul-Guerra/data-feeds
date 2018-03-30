@@ -1,20 +1,6 @@
 // Repeatedly perform a given task until a condition is met
 // broken into chunks of work to be non-blocking
 
-// function chunk(task, isDone, timeLimit = 1) {
-//   const start = Date.now();
-//   while (!isDone()) {
-//     let now = Date.now();
-//     if (now - start > timeLimit) {
-//       // console.log(`${now} - ${start} = ${now - start} >=? ${timeLimit}`);
-//       // console.log(`timeLimit expired at ${now}, duration: ${now - start}`);
-//       setTimeout(() => chunk(task, isDone, timeLimit), 10);
-//     }
-//     task();
-//   }
-// }
-
-
 function chunk(task, isDone) {
   task();
   if (!isDone()) {
@@ -24,20 +10,9 @@ function chunk(task, isDone) {
   console.log('Done!');
 }
 
-// function chunk(task, isDone) {
-  //   task();
-  //   if (!isDone()) {
-    //     // console.log('NOT Done', results.length);
-    //     setTimeout(() => chunk(task, isDone), 0);
-    //     return;
-    //   }
-    //   console.log('Done!', results.length);
-    // }
-    
-    
 let results = [];
 
-function doTask(bigResults) {
+function doTask() {
   results.push(Date.now());
   console.log(results.length);
   return results;
