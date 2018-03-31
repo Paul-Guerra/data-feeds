@@ -9,12 +9,12 @@ export class EventService {
     this.dispatch = dispatch;
     this.worker = new Worker('/event-scheduler.worker.bundle.js');
     this.worker.onerror = e => EventService.onError(e);
+    this.worker.onmessage = event => this.onMessage(event);
     this.workerInit = {};
     this.onInit = new Promise((resolve, reject) => {
       this.workerInit.resolve = resolve;
       this.workerInit.reject = reject;
     });
-    this.worker.onmessage = event => this.onMessage(event);
   }
   /**
    * Tells worker to run in a specific profile
@@ -33,7 +33,7 @@ export class EventService {
 
   onMessage(event) {
     let action = event.data;
-    console.log(action);
+    console.log(action.type);
     switch (action.type) {
       case 'WORKER.READY':
         console.log('WORKER.READY');

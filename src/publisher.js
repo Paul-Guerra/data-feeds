@@ -23,19 +23,30 @@ function* makeHeadline(prefix = '', index = 0, inc = 1) {
 export default class Publisher {
   constructor(name, dispatch, initialIndex = 0) {
     this.name = name;
-    this.dispatch = (...args) => dispatch(args);
-    this.headlineWriter = makeHeadline(`${this.name} - `, initialIndex);
+    this.dispatch = dispatch;
+    this.nextHeadline = makeHeadline(`${this.name} - `, initialIndex);
+    this.prevHeadline = makeHeadline(`${this.name} - `, initialIndex - 1, -1);
   }
 
-  getArchive() {
-    return this;
+  getArchive(limit = 50) {
+    repeat(
+      () => {
+        this.dispatch({
+          type: 'HEADLINE.ARCHIVE',
+          from: this.name,
+          headline: this.prevHeadline.next()
+        });
+      },
+      limit,
+      0
+    );
   }
 
   publish() {
-    postMessage({
+    this.dispatch({
       type: 'HEADLINE.PUBLISH',
-      from: 'this.name',
-      headline: this.headlineWriter.next()
+      from: this.name,
+      headline: this.nextHeadline.next()
     });
   }
 }
