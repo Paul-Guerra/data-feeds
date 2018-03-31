@@ -11,7 +11,7 @@ export function chunk(job) {
   }).catch((e) => { job.reject(e); });
 }
 
-export default function doAsyncJob(task, stopWhenTrue, wait) {
+export default function doAsyncJob(task, stopWhenTrue, wait = 0) {
   return new Promise((resolve, reject) => {
     let job = {
       task,
