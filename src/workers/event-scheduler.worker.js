@@ -22,7 +22,7 @@ export default class EventScheduler {
   
   runProfile() {
     console.log('EventScheduler.runProfile()');
-    run(postMessage);
+    run(msg => self.postMessage(msg));
     return this;
   }
 
@@ -33,6 +33,7 @@ export default class EventScheduler {
 }
 
 const eventScheduler = new EventScheduler();
+
 /**
  * receives messages sent to this worker and
  * call the appropriate method
