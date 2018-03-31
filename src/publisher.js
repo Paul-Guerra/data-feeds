@@ -1,6 +1,5 @@
 import loremIpsum from 'lorem-ipsum';
-import repeat from './utils/repeat';
-import doAsyncJob from './utils/async-job';
+import { repeat } from './utils/async-job';
 
 
 function* makeHeadline(prefix = '', index = 0, inc = 1) {
@@ -29,17 +28,15 @@ export default class Publisher {
   }
 
   getArchive(limit = 50) {
-    let count = 0;
-    doAsyncJob(
+    repeat(
       () => {
         this.dispatch({
           type: 'HEADLINE.ARCHIVE',
           from: this.name,
           headline: this.prevHeadline.next()
         });
-        count += 1;
       },
-      () => count === 50
+      50
     );
   }
 

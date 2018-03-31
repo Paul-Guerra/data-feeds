@@ -26,3 +26,13 @@ export default function doAsyncJob(task, stopWhenTrue) {
     chunk(job);
   });
 }
+
+export function repeat(job, limit) {
+  let count = 0;
+  const task = () => {
+    job();
+    count += 1;
+  };
+  const stopWhen = () => count === limit;
+  return doAsyncJob(task, stopWhen);
+}
