@@ -6,7 +6,7 @@ export default function run(dispatch) {
   let dailyBugle = new Publisher('Daily Bugle', dispatch);
   let gothamGazette = new Publisher('Gotham Gazette', dispatch);
   dailyPlanet.getArchive();
-  repeat(() => dailyPlanet.publish(), Infinity, 1000);
+  // repeat(() => dailyPlanet.publish(), Infinity, 1000);
   // repeat(() => dailyBugle.publish(), Infinity, 2000);
   // repeat(() => gothamGazette.publish(), Infinity, 3000);
 }

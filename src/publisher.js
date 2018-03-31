@@ -29,16 +29,17 @@ export default class Publisher {
   }
 
   getArchive(limit = 50) {
-    repeat(
+    let count = 0;
+    doAsyncJob(
       () => {
         this.dispatch({
           type: 'HEADLINE.ARCHIVE',
           from: this.name,
           headline: this.prevHeadline.next()
         });
+        count += 1;
       },
-      limit,
-      0
+      () => count === 50
     );
   }
 
