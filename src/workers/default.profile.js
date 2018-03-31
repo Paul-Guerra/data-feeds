@@ -1,4 +1,4 @@
-import repeat from '../utils/repeat';
+import { repeat } from '../utils/async-job';
 import Publisher from '../publisher';
 
 export default function run(dispatch) {
