@@ -1,5 +1,6 @@
 import loremIpsum from 'lorem-ipsum';
 import { repeat } from './utils/async-job';
+import system from './system';
 
 function* makeHeadline(prefix = '', index = 0, inc = 1) {
   let id = index;
@@ -29,10 +30,13 @@ export default class Publisher {
   getArchive(limit = 50) {
     repeat(
       () => {
+        let systemId = system.prevId();
         this.dispatch({
           type: 'HEADLINE.ARCHIVE',
+          systemId,
           from: this.name,
           headline: this.prevHeadline.next()
+          headline: `(${systemId}): ${headline}`
         });
       },
       50
@@ -41,12 +45,12 @@ export default class Publisher {
 
   publish() {
     let headline = this.nextHeadline.next().value;
+    let systemId = system.nextId();
     this.dispatch({
       type: 'HEADLINE.PUBLISH',
       systemId,
       from: this.name,
       headline: `(${systemId}): ${headline}`
     });
-    systemId += 1;
   }
 }
