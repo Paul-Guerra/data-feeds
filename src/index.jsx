@@ -1,6 +1,6 @@
 import 'babel-polyfill';
 
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import * as React from 'react';
 import { Provider } from 'react-redux';
 import * as ReactDOM from 'react-dom';
@@ -12,7 +12,10 @@ import timer from './middleware/timer.middle';
 import event from './middleware/event.middle';
 
 document.addEventListener('DOMContentLoaded', () => {
-  let store = createStore(app, applyMiddleware(fetch, timer, event));
+
+  /* eslint no-underscore-dangle: "off" */
+  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+  const store = createStore(app, composeEnhancers(applyMiddleware(fetch, timer, event)));
 
   ReactDOM.render(
     <Provider store={store}>
