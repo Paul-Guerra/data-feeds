@@ -4,16 +4,17 @@ import system from './system';
 
 function* makeHeadline(prefix = '', index = 0, inc = 1) {
   let id = index;
-  let text = loremIpsum({
-    count: 1,
-    units: 'sentences',
-    sentenceLowerBound: 5,
-    sentenceUpperBound: 10,
-    paragraphLowerBound: 3,
-    paragraphUpperBound: 7,
-    format: 'plain',
-  });
   while (true) {
+    let text = loremIpsum({
+      count: 1,
+      units: 'sentences',
+      sentenceLowerBound: 5,
+      sentenceUpperBound: 10,
+      paragraphLowerBound: 3,
+      paragraphUpperBound: 7,
+      random: Math.random,
+      format: 'plain',
+    });
     yield `${id} - ${prefix}${text}`;
     id += inc;
   }
