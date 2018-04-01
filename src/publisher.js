@@ -40,7 +40,8 @@ export default class Publisher {
           headline: `(${systemId}): ${headline}`
         });
       },
-      50
+      limit,
+      0
     );
   }
 
