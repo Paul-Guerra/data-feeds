@@ -17,3 +17,11 @@ export function publishHeadline(systemId, id, headline) {
     headline
   };
 }
+
+export function subscribed(publisher) {
+  return {
+    type: ACTIONS.PUBLISHER.SUBSCRIBED,
+    id: publisher.id,
+    name: publisher.name
+  };
+}
