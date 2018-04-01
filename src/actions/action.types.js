@@ -10,6 +10,12 @@ export const TYPES = {
   },
   TIMER: {
     UPDATE: 'TIMER.UPDATE'
+  },
+  PUBLISHER: {
+    HEADLINE: {
+      ARCHIVE: 'PUBLISHER.HEADLINE.ARCHIVE',
+      PUBLISH: 'PUBLISHER.HEADLINE.PUBLISH',
+    }
   }
 };
 
