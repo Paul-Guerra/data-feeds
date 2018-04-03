@@ -1,43 +1,48 @@
-/* global jest, describe, it, expect */
+/* global jest, describe, it, expect, beforeEach */
 
+import { doAsyncJob } from '../async-job';
 import repeat from '../repeat';
 
-jest.useFakeTimers();
+jest.mock('../async-job');
 
 describe('repeat', () => {
-  it('calls function passed to and sets a recursive timer', () => {
-    const target = jest.fn();
-    repeat(target);
+  let job = jest.fn();
+  let limit = 1;
+  let wait = 500;
 
-    // At this point in time, there should have been a single call to
-    // setTimeout to schedule the end of the game in 1 second.
-    expect(setTimeout).toHaveBeenCalledTimes(1);
-    expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 1000);
-
-    // Fast forward and exhaust only currently pending timers
-    // (but not any new timers that get created during that process)
-    jest.runOnlyPendingTimers();
-
-    expect(target).toHaveBeenCalledTimes(1);
-    expect(setTimeout).toHaveBeenCalledTimes(2);
-    expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 1000);
+  beforeEach(() => {
+    job.mockClear();
+    doAsyncJob.mockClear();
   });
 
-  it('accepts custom values for limit', () => {
-    const target = jest.fn();
-    repeat(target, 0);
-
-    // Fast forward and exhaust only currently pending timers
-    // (but not any new timers that get created during that process)
-    jest.runOnlyPendingTimers();
-
-    expect(target).toHaveBeenCalledTimes(0);
+  it('returns a an async job promise', () => {
+    let promise = repeat(job, limit);
+    expect(promise).toBeInstanceOf(Promise);
   });
 
-  it('accepts custom values for wait', () => {
-    const target = jest.fn();
-    repeat(target, 10, 500);
+  it('calls doAsyncJob', () => {
+    repeat(job);
+    expect(doAsyncJob).toHaveBeenCalled();
+  });
 
-    expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 500);
+  it('calls doAsyncJob with a task that executes the job', () => {
+    repeat(job, limit);
+    let task = doAsyncJob.mock.calls[0][0];
+    task();
+    expect(job).toHaveBeenCalledTimes(1);
+  });
+
+  it('calls doAsyncJob with a stop function that is based on the limit provided', () => {
+    // count starts at 0. Setting limit to 0 woud make a stop check return true
+    repeat(job, 0);
+    let stop = doAsyncJob.mock.calls[0][1];
+    expect(stop()).toBe(true);
+  });
+
+  it('lets you customize the wait between repeated calls', () => {
+    // count starts at 0. Setting limit to 0 woud make a stop check return true
+    repeat(job, 0, wait);
+    let stop = doAsyncJob.mock.calls[0][1];
+    expect(doAsyncJob).toHaveBeenLastCalledWith(expect.any(Function), expect.any(Function), wait);
   });
 });

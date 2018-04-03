@@ -1,4 +1,4 @@
-import { repeat } from '../utils/async-job';
+import repeat from '../utils/repeat';
 import Publisher from '../publisher';
 import { subscribed } from '../actions/publisher.actions';
 

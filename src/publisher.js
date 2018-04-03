@@ -1,6 +1,6 @@
 import loremIpsum from 'lorem-ipsum';
 import slugify from 'slugify';
-import { repeat } from './utils/async-job';
+import repeat from './utils/repeat';
 import { archivedHeadline, publishHeadline } from './actions/publisher.actions';
 import system from './system';
 

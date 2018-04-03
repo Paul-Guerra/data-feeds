@@ -1,7 +1,11 @@
-export default function repeat(f, limit = Infinity, wait = 1000, count = 1) {
-  setTimeout(() => {
-    if (count > limit) return;
-    f();
-    repeat(f, limit, wait, count + 1);
-  }, wait);
+import { doAsyncJob } from './async-job';
+
+export default function repeat(job, limit = Infinity, wait = 1000) {
+  let count = 0;
+  const task = () => {
+    job();
+    count += 1;
+  };
+  const stopWhen = () => count === limit;
+  return doAsyncJob(task, stopWhen, wait);
 }

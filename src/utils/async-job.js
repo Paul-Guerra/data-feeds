@@ -3,37 +3,40 @@
 
 export function chunk(job) {
   let { task, stop, wait } = job;
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     task();
     if (!stop()) {
       setTimeout(() => chunk(job), wait);
     }
-  }).catch((e) => { job.reject(e); });
+    resolve();
+  }).catch(job.reject);
 }
 
-export default function doAsyncJob(task, stopWhenTrue, wait = 0) {
-  return new Promise((resolve, reject) => {
-    let job = {
-      task,
-      resolve,
-      reject,
-      wait,
-      stop: () => {
-        let shouldStop = stopWhenTrue();
-        if (shouldStop) resolve();
-        return shouldStop;
-      }
-    };
-    chunk(job);
-  });
-}
-
-export function repeat(job, limit, wait = 1000) {
-  let count = 0;
-  const task = () => {
-    job();
-    count += 1;
+export function createJob(options) {
+  let {
+    task, stopWhenTrue, wait, resolve, reject
+  } = options;
+  return {
+    task,
+    stop: () => {
+      let shouldStop = stopWhenTrue();
+      if (shouldStop) resolve();
+      return shouldStop;
+    },
+    wait,
+    resolve,
+    reject: e => reject(e)
   };
-  const stopWhen = () => count === limit;
-  return doAsyncJob(task, stopWhen, wait);
+}
+export function doAsyncJob(task, stopWhenTrue, wait = 0, exec = chunk) {
+  return new Promise((resolve, reject) => {
+    let job = createJob({
+      task,
+      stopWhenTrue,
+      wait,
+      resolve,
+      reject
+    });
+    exec(job);
+  });
 }
