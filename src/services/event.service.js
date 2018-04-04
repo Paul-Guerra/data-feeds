@@ -33,7 +33,6 @@ export class EventService {
 
   onMessage(event) {
     let action = event.data;
-    console.log(action);
     switch (action.type) {
       case 'WORKER.READY':
         console.log('WORKER.READY');

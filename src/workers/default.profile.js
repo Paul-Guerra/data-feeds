@@ -10,9 +10,7 @@ export default function run(dispatch) {
   dispatch(subscribed(dailyPlanet));
   dispatch(subscribed(dailyBugle));
   dispatch(subscribed(gothamGazette));
-  // dailyPlanet.getArchive(5);
-  // dailyBugle.getArchive(5);
-  // repeat(() => dailyPlanet.publish(), Infinity, 1000);
+
   repeat(() => dailyBugle.publish(), 5, 100);
   repeat(() => gothamGazette.publish(), 10, 100);
 }
