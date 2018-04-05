@@ -9,6 +9,7 @@ import Home from '../components/home.component';
 import FetchPage from './fetch-page.component';
 import TimerPage from './timer-page.component';
 import SubscriptionsPage from './subscriptions-page.component';
+import ActiveFeedsPage from './active-feeds-page.component';
 
 export default class App extends React.Component {
   componentDidMount() {

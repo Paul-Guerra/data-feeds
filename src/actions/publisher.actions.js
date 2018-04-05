@@ -2,7 +2,7 @@ import ACTIONS from './action.types';
 
 export function archivedHeadline(systemId, id, headline) {
   return {
-    type: ACTIONS.PUBLISHER.HEADLINE.ARCHIVE,
+    type: ACTIONS.HEADLINE.ARCHIVE,
     from: id,
     systemId,
     headline
@@ -11,7 +11,7 @@ export function archivedHeadline(systemId, id, headline) {
 
 export function publishHeadline(systemId, id, headline) {
   return {
-    type: ACTIONS.PUBLISHER.HEADLINE.PUBLISH,
+    type: ACTIONS.HEADLINE.NEW,
     from: id,
     systemId,
     headline
