@@ -7,9 +7,9 @@ export default (state = INITIAL_STATE, action) => {
 
   let data = {};
   switch (action.type) {
-    case ACTIONS.HEADLINE.NEW:
-    case ACTIONS.HEADLINE.ARCHIVE:
-    case ACTIONS.PUBLISHER.SUBSCRIPTION.CLICK:
+    case ACTIONS.MESSAGE.NEW:
+    case ACTIONS.MESSAGE.ARCHIVE:
+    case ACTIONS.CONTACT.SUBSCRIPTION.CLICK:
       newState = Object.assign({}, state);
       break;
     default:

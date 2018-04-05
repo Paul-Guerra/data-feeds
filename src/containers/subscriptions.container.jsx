@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
 import SubscriptionsComponent from '../components/subscriptions.component';
-import subscriptionClick from '../actions/subscriptions.actions';
+import { click } from '../actions/contact.actions';
 
 // map state to a prop of the component
 function mapStateToProps(state) {
   return {
-    subscriptions: state.subscriptions,
+    contacts: state.contacts,
     order: state.subscriptionsOrder
   };
 }
@@ -14,7 +14,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     onSubscriptionClick: (id) => {
-      dispatch(subscriptionClick(id));
+      dispatch(click(id));
     }
   };
 }

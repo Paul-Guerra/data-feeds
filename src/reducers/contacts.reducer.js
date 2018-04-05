@@ -7,7 +7,7 @@ export default (state = INITIAL_STATE, action) => {
 
   let data = {};
   switch (action.type) {
-    case ACTIONS.PUBLISHER.SUBSCRIBED:
+    case ACTIONS.CONTACT.SUBSCRIBED:
       data[action.id] = {
         id: action.id,
         name: action.name

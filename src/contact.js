@@ -1,10 +1,10 @@
 import loremIpsum from 'lorem-ipsum';
 import slugify from 'slugify';
 import repeat from './utils/repeat';
-import { archivedHeadline, publishHeadline } from './actions/publisher.actions';
+import { archivedMessage, publishMessage } from './actions/message.actions';
 import system from './system';
 
-export function* makeHeadline(prefix = '', index = 0, inc = 1) {
+export function* makeMessage(prefix = '', index = 0, inc = 1) {
   let id = index;
   while (true) {
     let text = loremIpsum({
@@ -22,23 +22,23 @@ export function* makeHeadline(prefix = '', index = 0, inc = 1) {
   }
 }
 
-export default class Publisher {
+export default class Contact {
   constructor(name, dispatch, initialIndex = 0) {
     this.name = name;
     this.id = slugify(name, { lower: true });
     this.dispatch = dispatch;
-    const newHeadline = makeHeadline(`${this.name} - `, initialIndex);
-    const oldHeadline = makeHeadline(`${this.name} - `, initialIndex - 1, -1);
-    this.nextHeadline = () => newHeadline.next().value;
-    this.prevHeadline = () => oldHeadline.next().value;
+    const newMessage = makeMessage(`${this.name} - `, initialIndex);
+    const oldMessage = makeMessage(`${this.name} - `, initialIndex - 1, -1);
+    this.nextMessage = () => newMessage.next().value;
+    this.prevMessage = () => oldMessage.next().value;
   }
 
   getArchive(limit = 50) {
     repeat(
       () => {
         let systemId = system.prevId();
-        let headline = this.prevHeadline();
-        this.dispatch(archivedHeadline(systemId, this.id, `(${systemId}): ${headline}`));
+        let MESSAGE = this.prevMessage();
+        this.dispatch(archivedMessage(systemId, this.id, `(${systemId}): ${MESSAGE}`));
       },
       limit,
       0
@@ -47,7 +47,7 @@ export default class Publisher {
 
   publish() {
     let systemId = system.nextId();
-    let headline = this.nextHeadline();
-    this.dispatch(publishHeadline(systemId, this.id, `(${systemId}): ${headline}`));
+    let MESSAGE = this.nextMessage();
+    this.dispatch(publishMessage(systemId, this.id, `(${systemId}): ${MESSAGE}`));
   }
 }

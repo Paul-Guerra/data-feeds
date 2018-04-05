@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import ActiveFeedsComponent from '../components/active-feeds.component';
+import ActiveFeedsComponent from '../components/active-conversations.component';
 
 // map state to a prop of the component
 function mapStateToProps(state) {

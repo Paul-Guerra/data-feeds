@@ -1,24 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export function Item(subscription, onSubscriptionClick) {
+export function Item(contact, onSubscriptionClick) {
   return (
-    <li key={subscription.id}>
-      <button onClick={() => onSubscriptionClick(subscription.id)}>{subscription.name}</button>
+    <li key={contact.id}>
+      <button onClick={() => onSubscriptionClick(contact.id)}>{contact.name}</button>
     </li>
   );
 }
 
-export function items(subscriptions, order, onSubscriptionClick) {
-  return order.map(id => Item(subscriptions[id], onSubscriptionClick));
+export function items(contacts, order, onSubscriptionClick) {
+  return order.map(id => Item(contacts[id], onSubscriptionClick));
 }
 
-export default function Subscriptions({ subscriptions, order, onSubscriptionClick }) {
+export default function Subscriptions({ contacts, order, onSubscriptionClick }) {
   return (
     <div>
       subscription list goes here
       <ul>
-        { items(subscriptions, order, onSubscriptionClick) }
+        { items(contacts, order, onSubscriptionClick) }
       </ul>
     </div>
   );
@@ -26,6 +26,6 @@ export default function Subscriptions({ subscriptions, order, onSubscriptionClic
 
 Subscriptions.propTypes = {
   order: PropTypes.array.isRequired,
-  subscriptions: PropTypes.object.isRequired,
+  contacts: PropTypes.object.isRequired,
   onSubscriptionClick: PropTypes.func.isRequired
 };

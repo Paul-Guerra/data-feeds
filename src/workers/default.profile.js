@@ -1,16 +1,16 @@
 import repeat from '../utils/repeat';
-import Publisher from '../publisher';
-import { subscribed } from '../actions/publisher.actions';
+import Contact from '../contact';
+import subscribed from '../actions/contact.actions';
 
 
 export default function run(dispatch) {
-  let dailyPlanet = new Publisher('Daily Planet', dispatch);
-  let dailyBugle = new Publisher('Daily Bugle', dispatch);
-  let gothamGazette = new Publisher('Gotham Gazette', dispatch);
-  dispatch(subscribed(dailyPlanet));
-  dispatch(subscribed(dailyBugle));
-  dispatch(subscribed(gothamGazette));
+  let clarkKent = new Contact('Clark Kent', dispatch);
+  let peterParker = new Contact('Peter Parker', dispatch);
+  let bruceWayne = new Contact('Bruce Wayne', dispatch);
+  dispatch(subscribed(clarkKent));
+  dispatch(subscribed(peterParker));
+  dispatch(subscribed(bruceWayne));
 
-  repeat(() => dailyBugle.publish(), 5, 100);
-  repeat(() => gothamGazette.publish(), 10, 100);
+  repeat(() => clarkKent.publish(), 5, 100);
+  repeat(() => peterParker.publish(), 10, 100);
 }
