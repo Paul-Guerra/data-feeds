@@ -6,7 +6,7 @@ import { click } from '../actions/contact.actions';
 function mapStateToProps(state) {
   return {
     contacts: state.contacts,
-    order: state.subscriptionsOrder
+    order: state.subscriptionsList
   };
 }
 

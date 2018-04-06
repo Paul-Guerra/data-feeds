@@ -5,14 +5,9 @@ const INITIAL_STATE = [];
 export default (state = INITIAL_STATE, action) => {
   let newState;
 
-  let data = {};
   switch (action.type) {
     case ACTIONS.CONTACT.SUBSCRIBED:
-      data[action.id] = {
-        id: action.id,
-        name: action.name
-      };
-      newState = [].concat(state, [action.id]);
+      newState = [action.id].concat(state);
       break;
     default:
       newState = [].concat(state);
