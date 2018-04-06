@@ -6,10 +6,8 @@ export default (state = INITIAL_STATE, action) => {
   let newState;
 
   switch (action.type) {
-    case ACTIONS.MESSAGE.NEW:
-    case ACTIONS.MESSAGE.ARCHIVE:
-    case ACTIONS.CONTACT.CLICK:
-      newState = [].concat(state);
+    case ACTIONS.CONVERSATION.NEW:
+      newState = [action.id].concat(state);
       break;
     default:
       newState = [].concat(state);

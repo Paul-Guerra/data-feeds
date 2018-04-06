@@ -5,12 +5,15 @@ const INITIAL_STATE = {};
 export default (state = INITIAL_STATE, action) => {
   let newState;
 
-  let id = action.from;
+  let data = {};
   switch (action.type) {
-    case ACTIONS.MESSAGE.NEW:
-    case ACTIONS.MESSAGE.ARCHIVE:
-    case ACTIONS.CONTACT.CLICK:
-      newState = Object.assign({}, state, { id });
+    case ACTIONS.CONVERSATION.NEW:
+      data[action.id] = {
+        id: action.id,
+        name: action.name,
+        contacts: action.contacts,
+      };
+      newState = Object.assign({}, state, data);
       break;
     default:
       newState = Object.assign({}, state);

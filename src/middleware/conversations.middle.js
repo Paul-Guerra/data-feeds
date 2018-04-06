@@ -2,7 +2,7 @@ import ACTIONS from '../actions/action.types';
 import { newFromMessage, updateFromMessage } from '../actions/conversation.actions';
 
 function isNewConversation(message, conversations) {
-  return !!conversations[message.from];
+  return !conversations[message.from];
 }
 
 // get contact/from id
@@ -19,11 +19,7 @@ const conversationsMiddle = store => next => (action) => {
     case ACTIONS.MESSAGE.NEW:
     case ACTIONS.MESSAGE.ARCHIVE:
       if (isNewConversation(action, conversations)) {
-        setTimeout(
-          () => store.dispatch(newFromMessage(action))
-          , 0
-        );
-        // store.dispatch();
+        setTimeout(() => store.dispatch(newFromMessage(action)), 0);
       } else {
         // store.dispatch(updateFromMessage({
         //   id: action.from,
