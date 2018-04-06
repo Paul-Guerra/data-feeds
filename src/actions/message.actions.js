@@ -1,19 +1,21 @@
 import ACTIONS from './action.types';
 
-export function archivedMessage(systemId, id, MESSAGE) {
+export function archivedMessage(systemId, contact, content) {
   return {
     type: ACTIONS.MESSAGE.ARCHIVE,
-    from: id,
+    from: contact.id,
+    name: contact.name,
     systemId,
-    MESSAGE
+    content
   };
 }
 
-export function publishMessage(systemId, id, MESSAGE) {
+export function publishMessage(systemId, contact, content) {
   return {
     type: ACTIONS.MESSAGE.NEW,
-    from: id,
+    from: contact.id,
+    name: contact.name,
     systemId,
-    MESSAGE
+    content
   };
 }

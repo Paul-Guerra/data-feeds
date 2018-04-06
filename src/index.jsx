@@ -10,12 +10,17 @@ import App from './containers/app.container';
 import fetch from './middleware/fetch.middle';
 import timer from './middleware/timer.middle';
 import event from './middleware/event.middle';
+import conversations from './middleware/conversations.middle';
+import contacts from './middleware/contacts.middle';
 
 document.addEventListener('DOMContentLoaded', () => {
 
   /* eslint no-underscore-dangle: "off" */
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-  const store = createStore(app, composeEnhancers(applyMiddleware(fetch, timer, event)));
+  const store = createStore(
+    app,
+    composeEnhancers(applyMiddleware(fetch, timer, event, conversations, contacts))
+  );
 
   ReactDOM.render(
     <Provider store={store}>

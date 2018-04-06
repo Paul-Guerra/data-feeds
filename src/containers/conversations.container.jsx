@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import ActiveFeedsComponent from '../components/active-conversations.component';
+import ConversationsComponent from '../components/conversations.component';
 
 // map state to a prop of the component
 function mapStateToProps(state) {
@@ -11,4 +11,4 @@ function mapDispatchToProps(dispatch) {
   return {};
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ActiveFeedsComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(ConversationsComponent);

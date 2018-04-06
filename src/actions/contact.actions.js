@@ -8,6 +8,14 @@ export default function subscribed(contact) {
   };
 }
 
+export function newFromMessage(message) {
+  return {
+    type: ACTIONS.CONTACT.NEW,
+    id: message.from,
+    name: message.name
+  };
+}
+
 export function click(id) {
   return {
     type: ACTIONS.CONTACT.CLICK,

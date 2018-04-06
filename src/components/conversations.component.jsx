@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function ActiveFeeds() {
+export default function ActiveConversations() {
   return (
     <div>
       active conversation list goes here
@@ -8,4 +8,4 @@ export default function ActiveFeeds() {
   );
 }
 
-ActiveFeeds.propTypes = {};
+ActiveConversations.propTypes = {};

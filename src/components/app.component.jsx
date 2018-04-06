@@ -9,7 +9,7 @@ import Home from '../components/home.component';
 import FetchPage from './fetch-page.component';
 import TimerPage from './timer-page.component';
 import SubscriptionsPage from './subscriptions-page.component';
-import ActiveConversationsPage from './active-conversations-page.component';
+import ConversationsPage from './conversations-page.component';
 
 export default class App extends React.Component {
   componentDidMount() {
@@ -25,14 +25,14 @@ export default class App extends React.Component {
             <li><Link to="/fetch">Fetch</Link></li>
             <li><Link to="/timer">Timer</Link></li>
             <li><Link to="/subscriptions">Subscriptions</Link></li>
-            <li><Link to="/conversations">Active Conversations</Link></li>
+            <li><Link to="/conversations">Conversations</Link></li>
           </ul>
           <hr />
           <Route exact path="/" component={Home} />
           <Route path="/fetch" component={FetchPage} />
           <Route path="/timer" component={TimerPage} />
           <Route path="/subscriptions" component={SubscriptionsPage} />
-          <Route path="/conversations" component={ActiveConversationsPage} />
+          <Route path="/conversations" component={ConversationsPage} />
         </div>
       </Router>
     );

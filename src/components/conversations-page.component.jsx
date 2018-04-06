@@ -1,5 +1,5 @@
 import React from 'react';
-import ActiveConversations from '../containers/active-conversations.container';
+import ActiveConversations from '../containers/conversations.container';
 
 export default function () {
   return (

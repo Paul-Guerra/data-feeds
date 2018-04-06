@@ -2,7 +2,7 @@
 import 'babel-polyfill';
 import run from './default.profile';
 
-/**
+/*
  * EventScheduler is resposible for posting messages to it's parent
  * at scheduled intervals according to the current profile loaded.
  * The EventScheduler is running in its own event loop as a WebWorker
@@ -34,7 +34,7 @@ export default class EventScheduler {
 
 const eventScheduler = new EventScheduler();
 
-/**
+/*
  * receives messages sent to this worker and
  * call the appropriate method
  */

@@ -37,8 +37,8 @@ export default class Contact {
     repeat(
       () => {
         let systemId = system.prevId();
-        let MESSAGE = this.prevMessage();
-        this.dispatch(archivedMessage(systemId, this.id, `(${systemId}): ${MESSAGE}`));
+        let message = this.prevMessage();
+        this.dispatch(archivedMessage(systemId, this, `(${systemId}): ${message}`));
       },
       limit,
       0
@@ -47,7 +47,7 @@ export default class Contact {
 
   publish() {
     let systemId = system.nextId();
-    let MESSAGE = this.nextMessage();
-    this.dispatch(publishMessage(systemId, this.id, `(${systemId}): ${MESSAGE}`));
+    let message = this.nextMessage();
+    this.dispatch(publishMessage(systemId, this, `(${systemId}): ${message}`));
   }
 }
