@@ -1,7 +1,7 @@
 import loremIpsum from 'lorem-ipsum';
 import slugify from 'slugify';
 import repeat from './utils/repeat';
-import { archivedMessage, publishMessage } from './actions/message.actions';
+import { archivedMessage, newMessage } from './actions/message.actions';
 import system from './system';
 
 export function* makeMessage(prefix = '', index = 0, inc = 1) {
@@ -48,6 +48,6 @@ export default class Contact {
   publish() {
     let systemId = system.nextId();
     let message = this.nextMessage();
-    this.dispatch(publishMessage(systemId, this, `(${systemId}): ${message}`));
+    this.dispatch(newMessage(systemId, this, `(${systemId}): ${message}`));
   }
 }

@@ -5,16 +5,15 @@ export function newFromMessage(message) {
     type: ACTIONS.CONVERSATION.NEW,
     id: message.from,
     name: message.name,
-    contacts: [message.from]
+    sources: [message.from]
   };
 }
 
-export function updateFromMessage(message) {
+export function newFromContact(contact) {
   return {
-    type: ACTIONS.CONVERSATION.UPDATE,
-    id: message.from,
-    name: message.name,
-    contacts: [message.from]
+    type: ACTIONS.CONVERSATION.NEW,
+    id: contact.id,
+    name: contact.name,
+    sources: [contact.id]
   };
 }
-

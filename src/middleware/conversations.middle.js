@@ -1,5 +1,5 @@
 import ACTIONS from '../actions/action.types';
-import { newFromMessage, updateFromMessage } from '../actions/conversation.actions';
+import { newFromMessage } from '../actions/conversation.actions';
 
 function isNewConversation(message, conversations) {
   return !conversations[message.from];
@@ -20,11 +20,6 @@ const conversationsMiddle = store => next => (action) => {
     case ACTIONS.MESSAGE.ARCHIVE:
       if (isNewConversation(action, conversations)) {
         setTimeout(() => store.dispatch(newFromMessage(action)), 0);
-      } else {
-        // store.dispatch(updateFromMessage({
-        //   id: action.from,
-        //   name: conversations[action.from]
-        // }));
       }
       break;
     case ACTIONS.CONTACT.CLICK:

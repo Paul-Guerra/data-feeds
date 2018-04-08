@@ -10,7 +10,7 @@ export function archivedMessage(systemId, contact, content) {
   };
 }
 
-export function publishMessage(systemId, contact, content) {
+export function newMessage(systemId, contact, content) {
   return {
     type: ACTIONS.MESSAGE.NEW,
     from: contact.id,
