@@ -1,4 +1,4 @@
-export default class WorkerBridge {
+export default class Bridge {
   /*
    * Receives and sends messages to and from a seperate
    *  worker process. Also dispatches actions.
@@ -6,7 +6,7 @@ export default class WorkerBridge {
   constructor(dispatch, workerPath) {
     this.dispatch = dispatch;
     this.worker = new Worker(workerPath);
-    this.worker.onerror = e => WorkerBridge.onError(e);
+    this.worker.onerror = e => Bridge.onError(e);
     this.worker.onmessage = event => this.onMessage(event);
     this.workerInit = {};
     this.onInit = new Promise((resolve, reject) => {
@@ -16,18 +16,18 @@ export default class WorkerBridge {
   }
 
   static onError(e) {
-    console.error('[WorkerBridge] error', e);
+    console.error('[Bridge] error', e);
   }
 
   onMessage(event) {
     let action = event.data;
     switch (action.type) {
       case 'WORKER.READY':
-        console.log('[WorkerBridge] WORKER.READY');
+        console.log('[Bridge] WORKER.READY');
         this.workerInit.resolve();
         break;
       case 'WORKER.FAILED':
-        console.log('[WorkerBridge] WORKER.FAILED');
+        console.log('[Bridge] WORKER.FAILED');
         this.workerInit.reject();
         break;
       default:

@@ -7,8 +7,6 @@ import * as ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import app from './app';
 import App from './containers/app.container';
-import fetch from './middleware/fetch.middle';
-import timer from './middleware/timer.middle';
 import event from './middleware/event.middle';
 import conversations from './middleware/conversations.middle';
 import contacts from './middleware/contacts.middle';
@@ -19,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
   const store = createStore(
     app,
-    composeEnhancers(applyMiddleware(fetch, timer, event, conversations, contacts))
+    composeEnhancers(applyMiddleware(event, conversations, contacts))
   );
 
   ReactDOM.render(
