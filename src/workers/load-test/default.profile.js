@@ -1,6 +1,6 @@
-import repeat from '../utils/repeat';
-import Contact from '../contact';
-import subscribed from '../actions/contact.actions';
+import repeat from '../../utils/repeat';
+import Contact from '../../contact';
+import subscribed from '../../actions/contact.actions';
 
 
 export default function run(dispatch) {

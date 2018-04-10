@@ -13,6 +13,6 @@ export class EventService extends WorkerBridge {
 let service;
 
 export default function init(dispatch) {
-  if (!service) service = new EventService(dispatch, '/event-scheduler.worker.bundle.js');
+  if (!service) service = new EventService(dispatch, '/load-test.worker.bundle.js');
   return service;
 }

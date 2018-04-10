@@ -5,7 +5,7 @@ module.exports = {
   devtool: 'source-map',
   entry: {
     main: './dist/index.js',
-    'event-scheduler.worker': './dist/workers/event-scheduler.worker.js'
+    'load-test.worker': './dist/workers/load-test/index.js'
   },
   output: {
     path: path.resolve(__dirname, 'dist'),

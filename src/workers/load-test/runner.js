@@ -1,5 +1,4 @@
-/* global self, postMessage */
-import 'babel-polyfill';
+/* global postMessage */
 import run from './default.profile';
 
 /*
@@ -9,7 +8,7 @@ import run from './default.profile';
  * so that it's timer is independent as possible from it's parent process
  * to similulate push load from external source eg, server push
  */
-export default class EventScheduler {
+export default class LoadTestRunner {
   constructor() {
     console.log('[EventScheduler] constructor()');
     postMessage({ type: 'WORKER.READY' });
@@ -22,7 +21,7 @@ export default class EventScheduler {
   
   runProfile() {
     console.log('EventScheduler.runProfile()');
-    run(msg => self.postMessage(msg));
+    run(msg => postMessage(msg));
     return this;
   }
 
@@ -31,27 +30,3 @@ export default class EventScheduler {
     return this;
   }
 }
-
-const eventScheduler = new EventScheduler();
-
-/*
- * receives messages sent to this worker and
- * call the appropriate method
- */
-self.onmessage = (event) => {
-  let key = `${event.data.context}::${event.data.action}`;
-  switch (key) {
-    case 'profile::load':
-      eventScheduler.loadProfile(event.data.profile);
-      break;
-    case 'profile::run':
-      eventScheduler.runProfile();
-      break;
-    case 'profile::stop':
-      eventScheduler.stopProfile();
-      break;
-    default:
-      console.warn(`No case for ${key}`);
-      break;
-  }
-};
