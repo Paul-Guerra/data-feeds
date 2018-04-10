@@ -1,4 +1,5 @@
 /* global describe, it, expect */
+
 import ACTIONS from '../action.types';
 import { archivedMessage, newMessage } from '../message.actions';
 
