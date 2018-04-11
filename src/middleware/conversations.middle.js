@@ -1,7 +1,7 @@
 import ACTIONS from '../actions/action.types';
 import { newFromMessage } from '../actions/conversation.actions';
 
-function isNewConversation(message, conversations) {
+export function isNewConversation(message, conversations) {
   return !conversations[message.from];
 }
 
@@ -22,12 +22,10 @@ const conversationsMiddle = store => next => (action) => {
         setTimeout(() => store.dispatch(newFromMessage(action)), 0);
       }
       break;
-    case ACTIONS.CONTACT.CLICK:
-      break;
     default:
       break;
   }
-  next(action); // pass action on to next middleware
+  return next(action); // pass action on to next middleware
 };
 
 export default conversationsMiddle;

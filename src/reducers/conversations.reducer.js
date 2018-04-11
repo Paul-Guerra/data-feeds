@@ -11,7 +11,7 @@ export default (state = INITIAL_STATE, action) => {
       data[action.id] = {
         id: action.id,
         name: action.name,
-        contacts: action.contacts,
+        contacts: [].concat(action.contacts),
       };
       newState = Object.assign({}, state, data);
       break;

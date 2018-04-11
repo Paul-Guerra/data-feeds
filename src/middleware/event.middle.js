@@ -6,7 +6,9 @@ let dataService;
 const eventMiddle = store => next => (action) => {
   switch (action.type) {
     case ACTIONS.APP.READY:
-      dataService = init(store.dispatch);
+      if (!dataService) {
+        dataService = init(store.dispatch);
+      }
       dataService.onInit.then(() => {
         dataService.run('default');
       });
@@ -15,7 +17,7 @@ const eventMiddle = store => next => (action) => {
     default:
       break;
   }
-  next(action); // pass action on to next middleware
+  return next(action); // pass action on to next middleware
 };
 
 export default eventMiddle;
