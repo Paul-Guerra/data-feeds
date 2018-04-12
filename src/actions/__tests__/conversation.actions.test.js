@@ -9,8 +9,8 @@ describe('newFromMessage action', () => {
     expect(action.type).toBe(ACTIONS.CONVERSATION.NEW);
     expect(action.id).toBe(msg.from);
     expect(action.name).toBe(msg.name);
-    expect(action.contacts.length).toBe(1);
-    expect(action.contacts[0]).toBe(msg.from);
+    expect(action.contacts.size).toBe(1);
+    expect(action.contacts.values().next().value).toBe(msg.from);
   });
 });
 
@@ -21,7 +21,7 @@ describe('newFromContact action', () => {
     expect(action.type).toBe(ACTIONS.CONVERSATION.NEW);
     expect(action.id).toBe(contact.id);
     expect(action.name).toBe(contact.name);
-    expect(action.contacts.length).toBe(1);
-    expect(action.contacts[0]).toBe(contact.id);
+    expect(action.contacts.size).toBe(1);
+    expect(action.contacts.values().next().value).toBe(contact.id);
   });
 });

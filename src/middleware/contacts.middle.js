@@ -5,7 +5,6 @@ export function isFromNewContact(message, contacts) {
   return !contacts[message.from];
 }
 
-// if conversations were updated during the sort resort
 const contactsMiddle = store => next => (action) => {
   let { contacts } = store.getState();
   switch (action.type) {

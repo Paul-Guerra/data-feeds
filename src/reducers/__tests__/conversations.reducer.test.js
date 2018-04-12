@@ -24,14 +24,14 @@ describe('conversations reducer', () => {
       type: ACTIONS.CONVERSATION.NEW,
       id: 12345,
       name: 'foo',
-      contacts: [67890]
+      contacts: new Set([67890])
     };
     let newState = reducer(initialState, action);
     expect(newState).not.toBe(initialState);
     expect(newState[action.id].id).toBe(action.id);
     expect(newState[action.id].name).toBe(action.name);
-    expect(newState[action.id].contacts.length).toBe(action.contacts.length);
-    expect(newState[action.id].contacts[0]).toBe(action.contacts[0]);
+    expect(newState[action.id].contacts.size).toBe(action.contacts.size);
+    expect(newState[action.id].contacts.values()).toEqual(action.contacts.values());
   });
 });
 

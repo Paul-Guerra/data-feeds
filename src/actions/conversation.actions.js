@@ -5,7 +5,7 @@ export function newFromMessage(message) {
     type: ACTIONS.CONVERSATION.NEW,
     id: message.from,
     name: message.name,
-    contacts: [message.from]
+    contacts: new Set([message.from])
   };
 }
 
@@ -14,6 +14,6 @@ export function newFromContact(contact) {
     type: ACTIONS.CONVERSATION.NEW,
     id: contact.id,
     name: contact.name,
-    contacts: [contact.id]
+    contacts: new Set([contact.id])
   };
 }

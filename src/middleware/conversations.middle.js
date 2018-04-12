@@ -5,14 +5,6 @@ export function isNewConversation(message, conversations) {
   return !conversations[message.from];
 }
 
-// get contact/from id
-// if id is not present in conversations object add it and sort
-// if id is present in conversations object update last update timestamp and sort it
-
-// if a new conversation was added while sorting old array
-// prepend the new conversation to the sorted results and resort
-
-// if conversations were updated during the sort resort
 const conversationsMiddle = store => next => (action) => {
   let { conversations } = store.getState();
   switch (action.type) {
