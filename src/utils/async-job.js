@@ -3,12 +3,14 @@
 
 export function chunk(job) {
   let { task, stop, wait } = job;
+  // make each chunk a work a Promise so if a chunk errors
+  // out we can cancel the whole job
   return new Promise((resolve) => {
-    task();
+    let result = task();
     if (!stop()) {
       setTimeout(() => chunk(job), wait);
     }
-    resolve();
+    resolve(result);
   }).catch(job.reject);
 }
 

@@ -1,4 +1,5 @@
 import ACTIONS from '../actions/action.types';
+import bringToTop from '../sorters/top.sorter';
 
 // export function conversationsWithContact(id) {
 //   let results = [];
@@ -6,17 +7,28 @@ import ACTIONS from '../actions/action.types';
 // }
 
 // get contact/from id
-// if id is not present in conversations object add it and sort
 // if id is present in conversations object update last update timestamp and sort it
 
-// if a new conversation was added while sorting old array
-// prepend the new conversation to the sorted results and resort
+
 
 // if conversations were updated during the sort resort
 const conversationsListMiddle = store => next => (action) => {
-  let { conversations } = store.getState();
+  let { contacts, conversationsList } = store.getState();
+  let convoIds;
   switch (action.type) {
     case ACTIONS.MESSAGE.NEW:
+      convoIds = contacts[action.from];
+      if (convoIds) {
+        bringToTop(convoIds.conversations, conversationsList);
+      }
+      break;
+    case ACTIONS.CONVERSATION.NEW:
+      // reducer will add id to top
+      // if a new conversation was added while sorting old array
+      // prepend the new conversation to the sorted results and resort
+      break;
+    case ACTIONS.CONVERSATION.REMOVED:
+      // find it and remove it
       break;
     default:
       break;

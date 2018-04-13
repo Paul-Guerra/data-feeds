@@ -10,14 +10,14 @@ import App from './containers/app.container';
 import event from './middleware/event.middle';
 import conversations from './middleware/conversations.middle';
 import contacts from './middleware/contacts.middle';
+import conversationsList from './middleware/conversations-list.middle';
 
 document.addEventListener('DOMContentLoaded', () => {
-
   /* eslint no-underscore-dangle: "off" */
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
   const store = createStore(
     app,
-    composeEnhancers(applyMiddleware(event, conversations, contacts))
+    composeEnhancers(applyMiddleware(event, conversations, contacts, conversationsList))
   );
 
   ReactDOM.render(
