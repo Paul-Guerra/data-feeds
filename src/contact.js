@@ -27,9 +27,9 @@ export default class Contact {
     this.name = name;
     this.id = slugify(name, { lower: true });
     this.dispatch = dispatch;
-    const newMessage = makeMessage(`${this.name} - `, initialIndex);
+    const makeNewMessage = makeMessage(`${this.name} - `, initialIndex);
     const oldMessage = makeMessage(`${this.name} - `, initialIndex - 1, -1);
-    this.nextMessage = () => newMessage.next().value;
+    this.nextMessage = () => makeNewMessage.next().value;
     this.prevMessage = () => oldMessage.next().value;
   }
 
