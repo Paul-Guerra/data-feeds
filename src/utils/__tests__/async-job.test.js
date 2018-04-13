@@ -87,6 +87,13 @@ describe('createJob', () => {
     expect(val).toBe(true);
   });
 
+  it('returned task function call original task with resolve & reject ', () => {
+    let job = asj.createJob(options);
+    job.task();
+    expect(options.task).toHaveBeenCalledTimes(1);
+    expect(options.task).toHaveBeenCalledWith(options.resolve, options.reject);
+  });
+
   it('reject method rejects the job promise with error', () => {
     let job = asj.createJob(options);
     let e = Error('stub error message');
@@ -118,6 +125,16 @@ describe('doAsyncJob', () => {
     exec.mockImplementationOnce(job => job.resolve());
     return asj.doAsyncJob(task, stopWhen, wait, exec).then(() => {
       expect(exec).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  it('a task can resolve the jobs promise ', () => {
+    let resolveValue = 'resolved from task';
+    task.mockImplementationOnce(resolve => resolve(resolveValue));
+    exec.mockImplementationOnce(job => job.task());
+    return asj.doAsyncJob(task, stopWhen, wait, exec).then((results) => {
+      expect(exec).toHaveBeenCalledTimes(1);
+      expect(results).toBe(resolveValue);
     });
   });
 });
