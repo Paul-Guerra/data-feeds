@@ -17,17 +17,18 @@ export function createJob(options) {
     task, stopWhenTrue, wait, resolve, reject
   } = options;
   return {
-    task,
+    task: () => task(resolve, reject),
     stop: () => {
       let shouldStop = stopWhenTrue();
       if (shouldStop) resolve();
       return shouldStop;
     },
-    wait,
+    reject: e => reject(e),
     resolve,
-    reject: e => reject(e)
+    wait,
   };
 }
+
 export function doAsyncJob(task, stopWhenTrue, wait = 0, exec = chunk) {
   return new Promise((resolve, reject) => {
     let job = createJob({
