@@ -1,9 +1,9 @@
 import { doAsyncJob } from './async-job';
 
-export default function repeat(job, limit = Infinity, wait = 1000) {
+export default function repeat(chore, limit = Infinity, wait = 1000) {
   let count = 0;
   const task = () => {
-    job();
+    chore(count);
     count += 1;
   };
   const stopWhen = () => count === limit;
