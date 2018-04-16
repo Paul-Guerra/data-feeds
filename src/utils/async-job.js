@@ -2,40 +2,45 @@
 // broken into chunks of work to be non-blocking
 
 export function chunk(job) {
-  let { task, stop, wait } = job;
+  let {
+    task,
+    stop,
+    output,
+    wait
+  } = job;
   // make each chunk a work a Promise so if a chunk errors
   // out we can cancel the whole job
   return new Promise((resolve) => {
-    let result = task();
-    if (!stop()) {
-      setTimeout(() => chunk(job), wait);
+    if (stop()) {
+      resolve();
+      job.resolve(output());
+      return;
     }
-    resolve(result);
+    setTimeout(() => chunk(job), wait);
+    resolve(task()); // resolves the task. Not the entire job.
   }).catch(job.reject);
 }
 
 export function createJob(options) {
   let {
-    task, stopWhenTrue, wait, resolve, reject
+    task, stop, output, wait, resolve, reject
   } = options;
   return {
     task: () => task(resolve, reject),
-    stop: () => {
-      let shouldStop = stopWhenTrue();
-      if (shouldStop) resolve();
-      return shouldStop;
-    },
-    reject: e => reject(e),
-    resolve,
+    stop,
+    output,
     wait,
+    resolve,
+    reject: e => reject(e),
   };
 }
 
-export function doAsyncJob(task, stopWhenTrue, wait = 0, exec = chunk) {
+export function doAsyncJob(task, stop, output, wait = 0, exec = chunk) {
   return new Promise((resolve, reject) => {
     let job = createJob({
       task,
-      stopWhenTrue,
+      stop,
+      output,
       wait,
       resolve,
       reject
