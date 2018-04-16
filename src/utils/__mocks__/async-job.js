@@ -1,6 +1,7 @@
 /* global jest */
 
-const returnPromise = () => new Promise(() => {});
-export const doAsyncJob = jest.fn(returnPromise);
+export const makeAsyncJob = jest.fn(() => function run() {
+  return new Promise(() => {});
+});
 export const createJob = jest.fn();
 export const chunk = jest.fn();
