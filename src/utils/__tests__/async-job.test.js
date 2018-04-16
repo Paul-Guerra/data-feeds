@@ -1,6 +1,6 @@
 /* global jest, describe, it, expect, beforeEach */
 
-import * as asj from '../async-job';
+import { chunk, createJob, doAsyncJob } from '../async-job';
 
 jest.useFakeTimers();
 
@@ -25,14 +25,14 @@ describe('chunk', () => {
   });
 
   it('returns a Promise', () => {
-    let result = asj.chunk(job);
+    let result = chunk(job);
     expect(result).toBeInstanceOf(Promise);
   });
 
   it('cancels the job when a task errors out', () => {
     let errMessage = 'task error';
     job.task.mockImplementationOnce(() => { throw Error(errMessage); });
-    let result = asj.chunk(job);
+    let result = chunk(job);
     return result.catch(() => {
       expect(job.reject).toHaveBeenCalledTimes(1);
       expect(job.reject).toHaveBeenCalledWith(expect.any(Error));
@@ -44,7 +44,7 @@ describe('chunk', () => {
 
   it('if stop condition is true, do not schedule the next job ', () => {
     job.stop = jest.fn(() => true);
-    let result = asj.chunk(job);
+    let result = chunk(job);
     return result.then(() => {
       expect(setTimeout).not.toHaveBeenCalled();
     });
@@ -52,14 +52,14 @@ describe('chunk', () => {
 
   it('if stop condition is true, does not call the task', () => {
     job.stop.mockImplementationOnce(() => true);
-    return asj.chunk(job).then(() => {
+    return chunk(job).then(() => {
       expect(job.task).not.toHaveBeenCalled();
     });
   });
 
   it('if stop condition is true, resolves with undefined', () => {
     job.stop.mockImplementationOnce(() => true);
-    return asj.chunk(job).then((taskresolve) => {
+    return chunk(job).then((taskresolve) => {
       expect(taskresolve).toBeUndefined();
     });
   });
@@ -68,7 +68,7 @@ describe('chunk', () => {
     let mockOutput = 'output!';
     job.stop.mockImplementationOnce(() => true);
     job.output.mockImplementationOnce(() => mockOutput);
-    return asj.chunk(job).then(() => {
+    return chunk(job).then(() => {
       expect(job.output).toHaveBeenCalledTimes(1);
       expect(job.resolve).toHaveBeenCalledTimes(1);
       expect(job.resolve).toHaveBeenCalledWith(mockOutput);
@@ -77,7 +77,7 @@ describe('chunk', () => {
 
   it('if stop condition is false, schedules the next task', () => {
     job.stop = jest.fn(() => false);
-    let result = asj.chunk(job);
+    let result = chunk(job);
     return result.then(() => {
       expect(setTimeout).toHaveBeenCalledTimes(1);
       expect(setTimeout).toHaveBeenCalledWith(expect.any(Function), job.wait);
@@ -87,7 +87,7 @@ describe('chunk', () => {
   });
 
   it('if stop condition is false, calls the job task', () => {
-    let result = asj.chunk(job);
+    let result = chunk(job);
     return result.then(() => {
       expect(job.task).toHaveBeenCalledTimes(1);
     });
@@ -96,7 +96,7 @@ describe('chunk', () => {
   it('if stop condition is false,task Promise is resolved with task return value', () => {
     let taskOutput = 'task output';
     job.task.mockImplementationOnce(() => taskOutput);
-    asj.chunk(job).then((result) => {
+    chunk(job).then((result) => {
       expect(result).toBe(taskOutput);
     });
   });
@@ -121,14 +121,14 @@ describe('createJob', () => {
   });
 
   it('returned task function calls original task with resolve & reject ', () => {
-    let job = asj.createJob(options);
+    let job = createJob(options);
     job.task();
     expect(options.task).toHaveBeenCalledTimes(1);
     expect(options.task).toHaveBeenCalledWith(options.resolve, options.reject);
   });
 
   it('returned reject method rejects the job promise with error', () => {
-    let job = asj.createJob(options);
+    let job = createJob(options);
     let e = Error('stub error message');
     job.reject(e);
     expect(options.reject).toHaveBeenCalledTimes(1);
@@ -153,13 +153,13 @@ describe('doAsyncJob', () => {
 
   it('returns a Promise', () => {
     task.mockImplementationOnce(resolve => resolve());
-    let promise = asj.doAsyncJob(task, stopWhen, output);
+    let promise = doAsyncJob(task, stopWhen, output);
     expect(promise).toBeInstanceOf(Promise);
   });
 
   it('calls exec with a job', () => {
     exec.mockImplementationOnce(job => job.resolve());
-    return asj.doAsyncJob(task, stopWhen, output, wait, exec).then(() => {
+    return doAsyncJob(task, stopWhen, output, wait, exec).then(() => {
       expect(exec).toHaveBeenCalledTimes(1);
     });
   });
@@ -168,7 +168,7 @@ describe('doAsyncJob', () => {
     let resolveValue = 'resolved from task';
     task.mockImplementationOnce(resolve => resolve(resolveValue));
     exec.mockImplementationOnce(job => job.task());
-    return asj.doAsyncJob(task, stopWhen, output, wait, exec).then((results) => {
+    return doAsyncJob(task, stopWhen, output, wait, exec).then((results) => {
       expect(exec).toHaveBeenCalledTimes(1);
       expect(results).toBe(resolveValue);
     });

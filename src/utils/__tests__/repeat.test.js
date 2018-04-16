@@ -5,7 +5,7 @@ import repeat from '../repeat';
 
 jest.mock('../async-job');
 
-describe('repeat', () => {
+describe.skip('repeat', () => {
   let chore = jest.fn();
   let limit = 1;
   let wait = 500;
