@@ -1,6 +1,6 @@
 /* global jest, describe, it, expect, beforeEach */
 
-import { chunk, createJob, doAsyncJob } from '../async-job';
+import { chunk, createJob, doAsyncJob, defaultHandlers } from '../async-job';
 
 jest.useFakeTimers();
 
@@ -128,41 +128,76 @@ describe('createJob', () => {
   });
 });
 
+describe('default job handlers', () => {
+  let { task, stop, output } = defaultHandlers;
+  let resolve = jest.fn();
+
+  beforeEach(() => {
+    resolve.mockClear();
+  });
+
+  it('default task function resolves the job promise', () => {
+    task(resolve);
+    expect(resolve).toHaveBeenCalledTimes(1);
+  });
+
+  it('default stop function returns true', () => {
+    expect(stop()).toBe(true);
+  });
+
+  it('default stop function returns true', () => {
+    expect(typeof output).toBe('function');
+  });
+});
+
 describe('doAsyncJob', () => {
+  let handlers = {
+    task: jest.fn(),
+    stop: jest.fn(),
+    output: jest.fn()
+  };
   let exec = jest.fn();
-  let task = jest.fn();
-  let output = jest.fn();
-  let stopWhen = jest.fn();
   let wait = 0;
 
   beforeEach(() => {
     exec.mockClear();
-    task.mockClear();
-    output.mockClear();
-    stopWhen.mockClear();
+    handlers.task.mockClear();
+    handlers.output.mockClear();
+    handlers.stop.mockClear();
     wait = 0;
   });
 
   it('returns a Promise', () => {
-    task.mockImplementationOnce(resolve => resolve());
-    let promise = doAsyncJob(task, stopWhen, output);
+    handlers.task.mockImplementationOnce(resolve => resolve());
+    let promise = doAsyncJob(handlers);
     expect(promise).toBeInstanceOf(Promise);
   });
 
   it('calls exec with a job', () => {
     exec.mockImplementationOnce(job => job.resolve());
-    return doAsyncJob(task, stopWhen, output, wait, exec).then(() => {
+    return doAsyncJob(handlers, wait, exec).then(() => {
       expect(exec).toHaveBeenCalledTimes(1);
     });
   });
 
   it('a task can resolve the jobs promise ', () => {
     let resolveValue = 'resolved from task';
-    task.mockImplementationOnce(resolve => resolve(resolveValue));
+    handlers.task.mockImplementationOnce(resolve => resolve(resolveValue));
     exec.mockImplementationOnce(job => job.task());
-    return doAsyncJob(task, stopWhen, output, wait, exec).then((results) => {
+    return doAsyncJob(handlers, wait, exec).then((results) => {
       expect(exec).toHaveBeenCalledTimes(1);
       expect(results).toBe(resolveValue);
+    });
+  });
+
+  it('falls back to default handlers', () => {
+    exec.mockImplementationOnce(job => job.resolve());
+    return doAsyncJob({}, wait, exec).then(() => {
+      let job = exec.mock.calls[0][0];
+      expect(typeof job.output).toBe('function');
+      expect(typeof job.task).toBe('function');
+      expect(typeof job.stop).toBe('function');
+      expect(job.stop()).toBe(true);
     });
   });
 });

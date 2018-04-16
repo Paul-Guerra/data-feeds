@@ -35,12 +35,18 @@ export function createJob(options) {
   };
 }
 
-export function doAsyncJob(task, stop, output, wait = 0, exec = chunk) {
+export const defaultHandlers = {
+  task: resolve => resolve(),
+  stop: () => true,
+  output: () => {}
+};
+
+export function doAsyncJob(handlers, wait = 0, exec = chunk) {
   return new Promise((resolve, reject) => {
     let job = createJob({
-      task,
-      stop,
-      output,
+      task: handlers.task || defaultHandlers.task,
+      stop: handlers.stop || defaultHandlers.stop,
+      output: handlers.output || defaultHandlers.output,
       wait,
       resolve,
       reject
