@@ -18,7 +18,7 @@ export function chunk(job) {
     }
     setTimeout(() => chunk(job), wait);
     resolve(task()); // resolves the task. Not the entire job.
-  }).catch(job.reject);
+  }).catch(e => job.reject(e));
 }
 
 export function createJob(options) {
@@ -31,7 +31,7 @@ export function createJob(options) {
     output,
     wait,
     resolve,
-    reject: e => reject(e),
+    reject
   };
 }
 

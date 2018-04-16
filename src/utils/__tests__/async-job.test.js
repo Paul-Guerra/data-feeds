@@ -36,7 +36,7 @@ describe('chunk', () => {
     return result.catch(() => {
       expect(job.reject).toHaveBeenCalledTimes(1);
       expect(job.reject).toHaveBeenCalledWith(expect.any(Error));
-      expect(job.reject.mock.calls[0][0].message).toHaveBeenCalledWith(errMessage); 
+      expect(job.reject.mock.calls[0][0].message).toHaveBeenCalledWith(errMessage);
       expect(result.catch).toHaveBeenCalledTimes(1);
       expect(result.catch).toHaveBeenCalledWith(expect.any(Function));
     });
@@ -125,14 +125,6 @@ describe('createJob', () => {
     job.task();
     expect(options.task).toHaveBeenCalledTimes(1);
     expect(options.task).toHaveBeenCalledWith(options.resolve, options.reject);
-  });
-
-  it('returned reject method rejects the job promise with error', () => {
-    let job = createJob(options);
-    let e = Error('stub error message');
-    job.reject(e);
-    expect(options.reject).toHaveBeenCalledTimes(1);
-    expect(options.reject).toHaveBeenLastCalledWith(e);
   });
 });
 
