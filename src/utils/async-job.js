@@ -1,6 +1,12 @@
 // Repeatedly perform a given task until a condition is met
 // broken into chunks of work to be non-blocking
 
+export const defaultHandlers = {
+  task: resolve => resolve(),
+  stop: () => true,
+  output: () => {}
+};
+
 export function chunk(job) {
   let {
     task,
@@ -25,6 +31,11 @@ export function createJob(options) {
   let {
     task, stop, output, wait, resolve, reject
   } = options;
+
+  task = task || defaultHandlers.task;
+  stop = stop || defaultHandlers.stop;
+  output = output || defaultHandlers.output;
+
   return {
     task: () => task(resolve, reject),
     stop,
@@ -35,22 +46,18 @@ export function createJob(options) {
   };
 }
 
-export const defaultHandlers = {
-  task: resolve => resolve(),
-  stop: () => true,
-  output: () => {}
-};
-
-export function doAsyncJob(handlers, wait = 0, exec = chunk) {
-  return new Promise((resolve, reject) => {
-    let job = createJob({
-      task: handlers.task || defaultHandlers.task,
-      stop: handlers.stop || defaultHandlers.stop,
-      output: handlers.output || defaultHandlers.output,
-      wait,
-      resolve,
-      reject
+export function makeAsyncJob(handlers, wait = 0, exec = chunk) {
+  return function run() {
+    return new Promise((resolve, reject) => {
+      let job = createJob({
+        task: handlers.task,
+        stop: handlers.stop,
+        output: handlers.output,
+        wait,
+        resolve,
+        reject
+      });
+      exec(job);
     });
-    exec(job);
-  });
+  };
 }
