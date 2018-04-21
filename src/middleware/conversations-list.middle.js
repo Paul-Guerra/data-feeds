@@ -1,34 +1,28 @@
 import ACTIONS from '../actions/action.types';
 import bringToTop from '../sorters/top.sorter';
+import ConversationsListManager from '../services/list-manager.service';
 
-// export function conversationsWithContact(id) {
-//   let results = [];
-//   if (!id) return results;
-// }
+let listManager = new ConversationsListManager(bringToTop);
 
-// get contact/from id
-// if id is present in conversations object update last update timestamp and sort it
-
-
-
-// if conversations were updated during the sort resort
 const conversationsListMiddle = store => next => (action) => {
   let { contacts, conversationsList } = store.getState();
-  let convoIds;
+  let contact;
   switch (action.type) {
     case ACTIONS.MESSAGE.NEW:
-      convoIds = contacts[action.from];
-      if (convoIds) {
-        bringToTop(convoIds.conversations, conversationsList);
+      // take new messages from **existing** contacts and bring them to the top
+      // messages from non existing contacts will fall through to other middlewares
+      // and create a new contact and conversation actions that will be dispatched.
+      // Those conversations will be appended to top in the other switch cases
+      contact = contacts[action.from];
+      if (contact) {
+        listManager.onNewMessage(contact.conversations, conversationsList, store.dispatch);
       }
       break;
     case ACTIONS.CONVERSATION.NEW:
-      // reducer will add id to top
-      // if a new conversation was added while sorting old array
-      // prepend the new conversation to the sorted results and resort
+      listManager.onNewConversation(action.id, conversationsList, store.dispatch);
       break;
     case ACTIONS.CONVERSATION.REMOVED:
-      // find it and remove it
+      listManager.onRemoveConversation(action.id, conversationsList, store.dispatch);
       break;
     default:
       break;
