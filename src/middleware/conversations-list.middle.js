@@ -13,16 +13,22 @@ const conversationsListMiddle = store => next => (action) => {
       // messages from non existing contacts will fall through to other middlewares
       // and create a new contact and conversation actions that will be dispatched.
       // Those conversations will be appended to top in the other switch cases
-      contact = contacts[action.from];
-      if (contact) {
-        listManager.onNewMessage(contact.conversations, conversationsList, store.dispatch);
-      }
+      // contact = contacts[action.from];
+      // if (contact) {
+      //   listManager.onNewMessage(contact.conversations, conversationsList, store.dispatch);
+      // }
       break;
     case ACTIONS.CONVERSATION.NEW:
-      listManager.onNewConversation(action.id, conversationsList, store.dispatch);
+      // enque conversation to be created
+      listManager.onNewConversation(action.id, store.dispatch);
       break;
     case ACTIONS.CONVERSATION.REMOVED:
-      listManager.onRemoveConversation(action.id, conversationsList, store.dispatch);
+    // listManager.onRemoveConversation(action.id, conversationsList, store.dispatch);
+      break;
+    case ACTIONS.CONVERSATIONS_LIST.ADD:
+      if (conversationsList.indexOf(action.id) > -1) {
+        return;
+      }
       break;
     default:
       break;
