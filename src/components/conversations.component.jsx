@@ -13,9 +13,9 @@ export default function ActiveConversations({ conversations, list }) {
   return (
     <div>
       active conversation list goes here
-      <ul>
+      <ol>
         {conversationsList(conversations, list)}
-      </ul>
+      </ol>
     </div>
   );
 }
