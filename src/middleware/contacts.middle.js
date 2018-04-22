@@ -10,9 +10,11 @@ const contactsMiddle = store => next => (action) => {
   switch (action.type) {
     case ACTIONS.MESSAGE.NEW:
     case ACTIONS.MESSAGE.ARCHIVE:
-      if (isFromNewContact(action, contacts)) {
-        setTimeout(() => store.dispatch(newFromMessage(action)), 0);
-      }
+      setTimeout(() => {
+        if (isFromNewContact(action, contacts)) {
+          store.dispatch(newFromMessage(action));
+        }
+      }, 0);
       break;
     default:
       break;

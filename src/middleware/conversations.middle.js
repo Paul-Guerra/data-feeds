@@ -10,9 +10,11 @@ const conversationsMiddle = store => next => (action) => {
   switch (action.type) {
     case ACTIONS.MESSAGE.NEW:
     case ACTIONS.MESSAGE.ARCHIVE:
-      if (isNewConversation(action, conversations)) {
-        setTimeout(() => store.dispatch(newFromMessage(action)), 0);
-      }
+      setTimeout(() => {
+        if (isNewConversation(action, conversations)) {
+          store.dispatch(newFromMessage(action));
+        }
+      }, 0);
       break;
     default:
       break;
