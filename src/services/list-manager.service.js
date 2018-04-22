@@ -10,21 +10,25 @@ export class JobQueue {
   enqueue(name, job) {
     if (!name || !job) return;
     this.jobs.push({ name, job });
-    if (!this.nextJobId) {
+    if (this.jobs.length === 1) {
       this.nextJob();
     }
+    // if (!this.nextJobId) {
+    //   this.nextJob();
+    // }
   }
 
   nextJob() {
-    if (this.nextJobId) return false;
-    this.nextJobId = setTimeout(() => this.dequeue(), 0);
-    return this.nextJobId;
+    // if (this.nextJobId) return false;
+    // this.nextJobId = setTimeout(() => this.dequeue(), 0);
+    // return this.nextJobId;
+    return setTimeout(() => this.dequeue(), 0);
   }
 
   dequeue() {
     if (this.jobs.length === 0) {
-      this.currentJob = null;
-      this.nextJobId = null;
+      // this.currentJob = null;
+      // this.nextJobId = null;
       return;
     }
     let { name, job } = this.jobs.shift();
@@ -68,11 +72,12 @@ export default class ConversationsListManager {
     });
   }
 
-  onNewConversation(conversation, list, dispatch) {
+  onNewConversation(conversation, dispatch) {
     return this.jobs.enqueue('add', () => {
+      // console.log('onNewConversation');
       dispatch({
         type: ACTIONS.CONVERSATIONS_LIST.ADD,
-        list: [conversation].concat(list)
+        list: [conversation]
       });
     });
   }
