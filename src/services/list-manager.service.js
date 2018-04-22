@@ -1,4 +1,4 @@
-import ACTIONS from '../actions/action.types';
+import { sorted, add, remove } from '../actions/conversations-list.actions';
 
 export class JobQueue {
   constructor() {
@@ -63,22 +63,14 @@ export default class ConversationsListManager {
   onNewMessage(convos, list, dispatch) {
     return this.jobs.enqueue('sort', () => {
       this.sort(convos, list).then((sortedList) => {
-        dispatch({
-          type: ACTIONS.CONVERSATIONS_LIST.SORT,
-          updated: convos,
-          list: sortedList,
-        });
+        dispatch(sorted(convos, sortedList));
       });
     });
   }
 
   onNewConversation(conversation, dispatch) {
     return this.jobs.enqueue('add', () => {
-      // console.log('onNewConversation');
-      dispatch({
-        type: ACTIONS.CONVERSATIONS_LIST.ADD,
-        list: [conversation]
-      });
+      dispatch(add(conversation));
     });
   }
 
@@ -87,10 +79,7 @@ export default class ConversationsListManager {
     let before = list.slice(0, index);
     let after = list.slice(index + 1, list.length);
     return this.jobs.enqueue('remove', () => {
-      dispatch({
-        type: ACTIONS.CONVERSATIONS_LIST.REMOVE,
-        list: [before].concat(after)
-      });
+      dispatch(remove(conversation, [before].concat(after)));
     });
   }
 }
