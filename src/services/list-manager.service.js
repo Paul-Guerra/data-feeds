@@ -59,7 +59,6 @@ export default class ConversationsListManager {
     this.jobs = new JobQueue();
   }
 
-
   onNewMessage(convos, list, dispatch) {
     return this.jobs.enqueue('sort', () => {
       this.sort(convos, list).then((sortedList) => {

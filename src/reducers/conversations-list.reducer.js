@@ -6,11 +6,11 @@ export default (state = INITIAL_STATE, action) => {
   let newState;
 
   switch (action.type) {
-    case ACTIONS.CONVERSATIONS_LIST.SORT:
     case ACTIONS.CONVERSATIONS_LIST.ADD:
-    case ACTIONS.CONVERSATIONS_LIST.REMOVE:
-      newState = [].concat(action.list);
+      newState = [].concat([action.id], state);
       break;
+    case ACTIONS.CONVERSATIONS_LIST.SORT:
+    case ACTIONS.CONVERSATIONS_LIST.REMOVE:
     default:
       newState = [].concat(state);
       break;
