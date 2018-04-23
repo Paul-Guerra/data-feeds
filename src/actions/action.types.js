@@ -2,6 +2,9 @@ export const TYPES = {
   APP: {
     READY: 'APP.READY'
   },
+  TIMER: {
+    UPDATE: 'TIMER.UPDATE'
+  },
   CONVERSATION: {
     NEW: 'CONVERSATION.NEW',
     REMOVE: 'CONVERSATION.REMOVE',
