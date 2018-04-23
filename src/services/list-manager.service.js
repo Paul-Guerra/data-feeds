@@ -5,9 +5,9 @@ export class JobQueue {
     this.jobs = [];
   }
 
-  enqueue(name, job) {
-    if (!name || !job) return;
-    this.jobs.push({ name, job });
+  enqueue(job) {
+    if (!job) return;
+    this.jobs.push(job);
     if (this.jobs.length === 1) {
       this.nextJob();
     }
@@ -21,7 +21,7 @@ export class JobQueue {
     if (this.jobs.length === 0) {
       return;
     }
-    let { name, job } = this.jobs.shift();
+    let job = this.jobs.shift();
 
     // be resilient against a bad push onto the queue
     if (!job) {
@@ -57,7 +57,7 @@ export default class ConversationsListManager {
   }
 
   onNewConversation(conversation, dispatch) {
-    return this.jobs.enqueue('add', () => {
+    return this.jobs.enqueue(() => {
       dispatch(add(conversation));
     });
   }
