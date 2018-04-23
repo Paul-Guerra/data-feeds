@@ -9,13 +9,16 @@ export function sorted(updated, list) {
 }
 
 export function add(conversation) {
-  // let pending = conversation;
-  // if (!(pending instanceof Array)) {
-  //   pending = [conversation];
-  // }
   return {
     type: ACTIONS.CONVERSATIONS_LIST.ADD,
     id: conversation
+  };
+}
+
+export function addBatch(conversations) {
+  return {
+    type: ACTIONS.CONVERSATIONS_LIST.ADD_BATCH,
+    conversations
   };
 }
 
