@@ -1,8 +1,17 @@
+import throttle from 'lodash.throttle';
 import ACTIONS from '../actions/action.types';
+import { addBatch } from '../actions/conversations-list.actions';
 import bringToTop from '../sorters/top.sorter';
 import ConversationsListManager from '../services/list-manager.service';
 
 let listManager = new ConversationsListManager(bringToTop);
+let listAddBuffer = [];
+
+const listBulkUpdate = throttle((dispatch) => {
+  let update = [].concat(listAddBuffer);
+  listAddBuffer = [];
+  dispatch(addBatch(update));
+}, 100);
 
 const conversationsListMiddle = store => next => (action) => {
   let { contacts, conversationsList } = store.getState();
@@ -23,12 +32,15 @@ const conversationsListMiddle = store => next => (action) => {
       listManager.onNewConversation(action.id, store.dispatch);
       break;
     case ACTIONS.CONVERSATION.REMOVED:
-    // listManager.onRemoveConversation(action.id, conversationsList, store.dispatch);
+      // listManager.onRemoveConversation(action.id, conversationsList, store.dispatch);
       break;
     case ACTIONS.CONVERSATIONS_LIST.ADD:
       if (conversationsList.indexOf(action.id) > -1) {
         return;
       }
+      listAddBuffer.push(action.id);
+      listBulkUpdate(store.dispatch);
+      return;
       break;
     default:
       break;
