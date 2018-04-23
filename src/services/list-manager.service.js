@@ -3,8 +3,6 @@ import { sorted, add, remove } from '../actions/conversations-list.actions';
 export class JobQueue {
   constructor() {
     this.jobs = [];
-    this.nextJobId = null;
-    this.currentJob = null;
   }
 
   enqueue(name, job) {
@@ -13,26 +11,17 @@ export class JobQueue {
     if (this.jobs.length === 1) {
       this.nextJob();
     }
-    // if (!this.nextJobId) {
-    //   this.nextJob();
-    // }
   }
 
   nextJob() {
-    // if (this.nextJobId) return false;
-    // this.nextJobId = setTimeout(() => this.dequeue(), 0);
-    // return this.nextJobId;
     return setTimeout(() => this.dequeue(), 0);
   }
 
   dequeue() {
     if (this.jobs.length === 0) {
-      // this.currentJob = null;
-      // this.nextJobId = null;
       return;
     }
     let { name, job } = this.jobs.shift();
-    this.currentJob = name;
 
     // be resilient against a bad push onto the queue
     if (!job) {
