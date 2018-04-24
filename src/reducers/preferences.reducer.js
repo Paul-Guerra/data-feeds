@@ -1,6 +1,6 @@
 import ACTIONS from '../actions/action.types';
 
-const INITIAL_STATE = { 
+const INITIAL_STATE = {
   conversationList: {
     bringToTop: true
   }
@@ -11,7 +11,7 @@ export default (state = INITIAL_STATE, action) => {
 
   switch (action.type) {
     default:
-      newState = Object.assign({}, state);
+      newState = state;
       break;
   }
 

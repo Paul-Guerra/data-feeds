@@ -10,7 +10,7 @@ export default (state = INITIAL_STATE, action) => {
       newState = [action.id].concat(state);
       break;
     default:
-      newState = [].concat(state);
+      newState = state;
       break;
   }
 

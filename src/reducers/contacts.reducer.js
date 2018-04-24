@@ -45,7 +45,7 @@ export default (state = INITIAL_STATE, action) => {
       newState = Object.assign({}, state, updatedContacts);
       break;
     default:
-      newState = Object.assign({}, state);
+      newState = state;
       break;
   }
 

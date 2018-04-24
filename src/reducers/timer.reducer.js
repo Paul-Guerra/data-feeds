@@ -15,7 +15,7 @@ export default (state = INITIAL_STATE, action) => {
       break;
 
     default:
-      newState = Object.assign({}, state);
+      newState = state;
       break;
   }
 

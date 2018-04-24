@@ -15,7 +15,7 @@ export default (state = INITIAL_STATE, action) => {
     case ACTIONS.CONVERSATIONS_LIST.SORT:
     case ACTIONS.CONVERSATIONS_LIST.REMOVE:
     default:
-      newState = [].concat(state);
+      newState = state;
       break;
   }
 
