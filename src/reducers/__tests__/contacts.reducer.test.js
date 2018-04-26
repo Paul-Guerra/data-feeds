@@ -14,7 +14,7 @@ describe('contacts reducer', () => {
     let initialState = {};
     let action = { type: 'MY.ACTION' };
     let newState = reducer(initialState, action);
-    expect(newState).not.toBe(initialState);
+    expect(newState).toBe(initialState);
     expect(Object.keys(newState).length).toBe(0);
   });
 

@@ -58,16 +58,30 @@ describe('conversations middleware', () => {
     expect(store.dispatch).toHaveBeenCalledWith(conversationAction);
   });
 
-  it('does nothing when new message if from an existing conversation', () => {
+  it('handles new messages on next tick', () => {
     let newMessageFromExisting = { type: ACTIONS.MESSAGE.NEW, from: 'foo' };
     conversations(store)(next)(newMessageFromExisting);
-    expect(setTimeout).not.toHaveBeenCalled();
+    expect(setTimeout).toHaveBeenCalled();
   });
 
-  it('does nothing when archive message if from an existing conversation', () => {
+  it('handles archive messages on next tick', () => {
+    let newMessageFromExisting = { type: ACTIONS.MESSAGE.NEW, from: 'foo' };
+    conversations(store)(next)(newMessageFromExisting);
+    expect(setTimeout).toHaveBeenCalled();
+  });
+
+  it('does nothing with new message if from an existing conversation', () => {
+    let newMessageFromExisting = { type: ACTIONS.MESSAGE.NEW, from: 'foo' };
+    conversations(store)(next)(newMessageFromExisting);
+    jest.runOnlyPendingTimers();
+    expect(store.dispatch).not.toHaveBeenCalled();
+  });
+
+  it('does nothing with archive message if from an existing conversation', () => {
     let archiveMessageFromExisting = { type: ACTIONS.MESSAGE.ARCHIVE, from: 'foo' };
     conversations(store)(next)(archiveMessageFromExisting);
-    expect(setTimeout).not.toHaveBeenCalled();
+    jest.runOnlyPendingTimers();
+    expect(store.dispatch).not.toHaveBeenCalled();
   });
 
   it('does nothing by default', () => {

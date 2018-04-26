@@ -15,8 +15,7 @@ describe('subscriptions list reducer', () => {
     let initialState = [];
     let action = { type: 'MY.ACTION' };
     let newState = reducer(initialState, action);
-    expect(newState).not.toBe(initialState);
-    expect(newState.length).toBe(0);
+    expect(newState).toBe(initialState);
   });
 
   it('appends id to array on subscribed action', () => {

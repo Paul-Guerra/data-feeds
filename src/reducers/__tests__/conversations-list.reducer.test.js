@@ -15,17 +15,17 @@ describe('conversations list reducer', () => {
     let initialState = [];
     let action = { type: 'MY.ACTION' };
     let newState = reducer(initialState, action);
-    expect(newState).not.toBe(initialState);
+    expect(newState).toBe(initialState);
     expect(newState.length).toBe(0);
   });
 
-  it('appends id to array on new conversation action', () => {
+  it('appends batch list updates to list on ADD_BATCH action', () => {
     let initialState = [];
-    let action = { type: ACTIONS.CONVERSATION.NEW, id: 12345 };
+    let action = { type: ACTIONS.CONVERSATIONS_LIST.ADD_BATCH, conversations: [12345] };
     let newState = reducer(initialState, action);
     expect(newState).not.toBe(initialState);
     expect(newState.length).toBe(1);
-    expect(newState[0]).toBe(action.id);
+    expect(newState[0]).toBe(action.conversations[0]);
   });
 });
 

@@ -57,16 +57,30 @@ describe('contacts middleware', () => {
     expect(store.dispatch).toHaveBeenCalledWith(contactAction);
   });
 
-  it('does nothing when new message if from an known user', () => {
+  it('handles new message on next tick', () => {
     let newMessageFromKnown = { type: ACTIONS.MESSAGE.NEW, from: 'foo' };
     contacts(store)(next)(newMessageFromKnown);
-    expect(setTimeout).not.toHaveBeenCalled();
+    expect(setTimeout).toHaveBeenCalled();
+  });
+
+  it('does nothing when new message if from a known user', () => {
+    let newMessageFromKnown = { type: ACTIONS.MESSAGE.NEW, from: 'foo' };
+    contacts(store)(next)(newMessageFromKnown);
+    jest.runOnlyPendingTimers();
+    expect(store.dispatch).not.toHaveBeenCalled();
+  });
+
+  it('handles archive message on next tick', () => {
+    let archiveMessageFromKnown = { type: ACTIONS.MESSAGE.ARCHIVE, from: 'foo' };
+    contacts(store)(next)(archiveMessageFromKnown);
+    expect(setTimeout).toHaveBeenCalled();
   });
 
   it('does nothing when archive message if from an known user', () => {
     let archiveMessageFromKnown = { type: ACTIONS.MESSAGE.ARCHIVE, from: 'foo' };
     contacts(store)(next)(archiveMessageFromKnown);
-    expect(setTimeout).not.toHaveBeenCalled();
+    jest.runOnlyPendingTimers();
+    expect(store.dispatch).not.toHaveBeenCalled();
   });
 
   it('does nothing by default', () => {
