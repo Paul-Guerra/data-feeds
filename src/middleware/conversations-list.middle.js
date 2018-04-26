@@ -35,12 +35,12 @@ const conversationsListMiddle = store => next => (action) => {
       // listManager.onRemoveConversation(action.id, conversationsList, store.dispatch);
       break;
     case ACTIONS.CONVERSATIONS_LIST.ADD:
-      if (conversationsList.indexOf(action.id) > -1) {
-        return;
+      // buffer all NEW conversations to be added to the list and
+      // dispatch later as a bulk update from a throttled function
+      if (conversationsList.indexOf(action.id) === -1) {
+        listAddBuffer.push(action.id);
+        listBulkUpdate(store.dispatch);
       }
-      listAddBuffer.push(action.id);
-      listBulkUpdate(store.dispatch);
-      return;
       break;
     default:
       break;
