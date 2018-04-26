@@ -1,44 +1,5 @@
 import { sorted, add, remove } from '../actions/conversations-list.actions';
-
-export class JobQueue {
-  constructor() {
-    this.jobs = [];
-  }
-
-  enqueue(job) {
-    if (!job) return;
-    this.jobs.push(job);
-    if (this.jobs.length === 1) {
-      this.nextJob();
-    }
-  }
-
-  nextJob() {
-    return setTimeout(() => this.dequeue(), 0);
-  }
-
-  dequeue() {
-    if (this.jobs.length === 0) {
-      return;
-    }
-    let job = this.jobs.shift();
-
-    // be resilient against a bad push onto the queue
-    if (!job) {
-      this.nextJob();
-      return;
-    }
-
-    let result = job();
-    if (result instanceof Promise) {
-      result.then(() => {
-        this.nextJob();
-      });
-    } else {
-      this.nextJob();
-    }
-  }
-}
+import JobQueue from '../utils/job-queue';
 
 // Responsible for managing the state of a list
 // during async operations
