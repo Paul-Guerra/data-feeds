@@ -23,7 +23,6 @@ describe('event service init()', () => {
 
 describe('EventService class', () => {
   let dispatch = jest.fn();
-  global.console.log = jest.fn();
   global.Worker = jest.fn(() => ({
     postMessage: jest.fn()
   }));

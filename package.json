@@ -13,7 +13,7 @@
     "babel:watch": "babel src/ --out-dir dist/ --ignore **/__*__/** --watch",
     "webpack": "webpack",
     "webpack:watch": "webpack --watch",
-    "test": "jest",
+    "test": "jest --silent",
     "test:debug": "echo  \"Visit \\033[1;36mchrome://inspect\\033[0m then wait for your \\033[1;33mdebugger;\\033[0m statement to trigger\" && node --inspect-brk node_modules/.bin/jest $1",
     "lint": "eslint src/**/*.js*",
     "lint:fix": "eslint src/**/*.js* --fix",

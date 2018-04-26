@@ -2,7 +2,6 @@
 import Bridge from '../bridge';
 
 global.Worker = jest.fn(); // Node does not have a "Worker" on the global
-global.console.error = jest.fn();
 
 describe('new Bridge()', () => {
   let dispatch = jest.fn();
@@ -12,7 +11,6 @@ describe('new Bridge()', () => {
   beforeEach(() => {
     dispatch.mockClear();
     global.Worker.mockClear();
-    global.console.error.mockClear();
     bridge = new Bridge(dispatch, workerPath);
   });
 
@@ -82,19 +80,17 @@ describe('Bridge.worker.onmessage', () => {
 });
 
 describe('Bridge.onError', () => {
-  beforeEach(() => {
-    global.console.error.mockClear();
-  });
 
   it('logs to error', () => {
+    let errLogSpy = jest.spyOn(global.console, 'error');    
     let e = { foo: 'bar' };
     Bridge.onError(e);
-    expect(console.error).toHaveBeenCalledWith('[Bridge] error', e);
+    expect(errLogSpy).toHaveBeenCalledWith('[Bridge] error', e);
+    errLogSpy.mockRestore();
   });
 });
 
 describe('onMessage', () => {
-  global.console.log = jest.fn();
   let dispatch = jest.fn();
   let workerPath = '/foo/bar';
   let bridge;
