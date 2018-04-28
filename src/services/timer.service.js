@@ -4,9 +4,9 @@ export function dateTime() {
 
 export default function init(onUpdate) {
   onUpdate(dateTime());
-  setTimeout(() => {
-    onUpdate(dateTime());
-    init(onUpdate);
-  }, 1000);
+  // setTimeout(() => {
+  //   onUpdate(dateTime());
+  //   init(onUpdate);
+  // }, 1000);
 }
 

@@ -28,7 +28,7 @@ const conversationsListMiddle = store => next => (action) => {
       // }
       break;
     case ACTIONS.CONVERSATION.NEW:
-      // enque conversation to be created
+      // enque conversation list item to be created
       listManager.onNewConversation(action.id, store.dispatch);
       break;
     case ACTIONS.CONVERSATION.REMOVED:
@@ -37,10 +37,10 @@ const conversationsListMiddle = store => next => (action) => {
     case ACTIONS.CONVERSATIONS_LIST.ADD:
       // buffer all NEW conversations to be added to the list and
       // dispatch later as a bulk update from a throttled function
-      if (conversationsList.indexOf(action.id) === -1) {
-        listAddBuffer.push(action.id);
-        listBulkUpdate(store.dispatch);
-      }
+      // if (conversationsList.indexOf(action.id) === -1) {
+      //   listAddBuffer.push(action.id);
+      //   listBulkUpdate(store.dispatch);
+      // }
       break;
     default:
       break;
