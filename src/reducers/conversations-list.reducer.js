@@ -7,7 +7,7 @@ export default (state = INITIAL_STATE, action) => {
 
   switch (action.type) {
     case ACTIONS.CONVERSATIONS_LIST.ADD_BATCH:
-      newState = [].concat(action.conversations, state);
+      newState = Array.from(new Set(action.conversations.concat(state)));
       break;
     case ACTIONS.CONVERSATIONS_LIST.SORT:
     case ACTIONS.CONVERSATIONS_LIST.REMOVE:

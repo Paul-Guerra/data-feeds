@@ -14,15 +14,18 @@ export default class UniqueJobQueue extends JobQueue {
   }
 
   enqueue(name, item, dispatch) {
+    this.buffer[name].unshift(item);
     if (this.names.has(name)) {
-      this.buffer[name].unshift(item);
       return;
     }
     this.names.add(name);
     super.enqueue(() => {
-      let ids = dedupe(this.buffer[name]);
-      setTimeout(() => dispatch(addBatch(ids)), 0);
-      this.names.delete(name);
+      setTimeout(() => {
+        let update = [].concat(this.buffer[name]);
+        dispatch(addBatch(update));
+        this.buffer[name] = [];
+        this.names.delete(name);
+      }, 0);
     });
   }
 }
