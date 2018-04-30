@@ -1,4 +1,4 @@
-import { sorted, add, remove } from '../actions/conversations-list.actions';
+import { sorted, addBatch, remove, removeRequest } from '../actions/conversations-list.actions';
 import JobQueue from '../utils/unique-job-queue';
 
 // Responsible for managing the state of a list
@@ -21,7 +21,7 @@ export default class ConversationsListManager {
     // return this.jobs.enqueue(() => {
     //   dispatch(add(conversation));
     // });
-    return this.jobs.enqueue('add', conversation, dispatch);
+    return this.jobs.enqueue('add', conversation, update => dispatch(addBatch(update)));
   }
 
   onRemoveConversation(conversation, list, dispatch) {
