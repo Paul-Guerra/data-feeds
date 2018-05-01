@@ -1,6 +1,4 @@
 import JobQueue from './job-queue';
-import { addBatch } from '../actions/conversations-list.actions';
-import dedupe from '../utils/dedupe';
 
 export default class UniqueJobQueue extends JobQueue {
   constructor() {
@@ -20,12 +18,10 @@ export default class UniqueJobQueue extends JobQueue {
     }
     this.names.add(name);
     super.enqueue(() => {
-      setTimeout(() => {
-        let update = [].concat(this.buffer[name]);
-        job(update);
-        this.buffer[name] = [];
-        this.names.delete(name);
-      }, 0);
+      let update = [].concat(this.buffer[name]);
+      this.buffer[name] = [];
+      this.names.delete(name);
+      job(update);
     });
   }
 }
