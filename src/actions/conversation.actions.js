@@ -17,3 +17,11 @@ export function newFromContact(contact) {
     contacts: new Set([contact.id])
   };
 }
+
+export function removed(update, conversations) {
+  return {
+    type: ACTIONS.CONVERSATION.REMOVED,
+    conversations,
+    update
+  };
+}

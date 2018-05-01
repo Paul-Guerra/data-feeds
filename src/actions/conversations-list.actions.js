@@ -15,17 +15,25 @@ export function add(conversation) {
   };
 }
 
-export function addBatch(conversations) {
+export function remove(id) {
   return {
-    type: ACTIONS.CONVERSATIONS_LIST.ADD_BATCH,
+    type: ACTIONS.CONVERSATIONS_LIST.REMOVE,
+    id
+  };
+}
+
+export function removeRequest(ids) {
+  let conversations = ids;
+  if (!(ids instanceof Array)) conversations = [ids];
+  return {
+    type: ACTIONS.CONVERSATIONS_LIST.REMOVE_REQUEST,
     conversations
   };
 }
 
-export function remove(removed, newList) {
+export function addBatch(conversations) {
   return {
-    type: ACTIONS.CONVERSATIONS_LIST.REMOVE,
-    list: newList,
-    removed,
+    type: ACTIONS.CONVERSATIONS_LIST.ADD_BATCH,
+    conversations
   };
 }
