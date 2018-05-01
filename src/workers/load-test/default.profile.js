@@ -15,7 +15,7 @@ export default function run(dispatch) {
     let contact = new Contact(name, dispatch);
     contacts.push(contact);
     let interval = Math.random() * ((5000 - 500 + 1) + 500);
-    repeat(() => contact.publish(), 10, interval);
+    repeat(() => contact.publish(), 1, interval);
   }
   // let clarkKent = new Contact('Clark Kent', dispatch);
   // let peterParker = new Contact('Peter Parker', dispatch);
