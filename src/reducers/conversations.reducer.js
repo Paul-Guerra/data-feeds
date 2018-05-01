@@ -15,6 +15,9 @@ export default (state = INITIAL_STATE, action) => {
       };
       newState = Object.assign({}, state, data);
       break;
+    case ACTIONS.CONVERSATION.REMOVED:
+      newState = Object.assign({}, action.update);
+      break;
     default:
       newState = state;
       break;

@@ -14,7 +14,7 @@ const listBulkUpdate = throttle((dispatch) => {
 }, 100);
 
 const conversationsListMiddle = store => next => (action) => {
-  let { contacts, conversationsList } = store.getState();
+  let { contacts } = store.getState();
   let contact;
   switch (action.type) {
     case ACTIONS.MESSAGE.NEW:
@@ -27,12 +27,14 @@ const conversationsListMiddle = store => next => (action) => {
       //   listManager.onNewMessage(contact.conversations, conversationsList, store.dispatch);
       // }
       break;
+    case ACTIONS.CONVERSATION.REMOVED:
+      break;
     case ACTIONS.CONVERSATION.NEW:
       // enque conversation list item to be created
       listManager.onNewConversation(action.id, store.dispatch);
       break;
-    case ACTIONS.CONVERSATION.REMOVED:
-      // listManager.onRemoveConversation(action.id, conversationsList, store.dispatch);
+    case ACTIONS.CONVERSATIONS_LIST.REMOVE_REQUEST:
+      listManager.onRemoveConversation(action.id, store.dispatch);
       break;
     case ACTIONS.CONVERSATIONS_LIST.ADD:
       // buffer all NEW conversations to be added to the list and

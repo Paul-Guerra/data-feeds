@@ -24,15 +24,17 @@ export default class ConversationsListManager {
     return this.jobs.enqueue('add', conversation, update => dispatch(addBatch(update)));
   }
 
-  onRemoveConversation(conversation, list, dispatch) {
+  onRemoveConversation(conversation, dispatch) {
+    return this.jobs.enqueue('remove', conversation, update => dispatch(removeRequest(update)));
     // todo: move to reducer. no use for bulk optimizations.
     // OR move to job queue to do the update and avoid leaving
     // entries in the list that map to undefined conversaitons
-    let index = list.indexOf(conversation);
-    let before = list.slice(0, index);
-    let after = list.slice(index + 1, list.length);
-    return this.jobs.enqueue(() => {
-      dispatch(remove(conversation, [before].concat(after)));
-    });
+    // return this.jobs.enqueue('remove', () => {
+    //   let list = getState().conversationsList;
+    //   let index = list.indexOf(conversation);
+    //   let before = list.slice(0, index);
+    //   let after = list.slice(index + 1, list.length);
+    //   dispatch(removeRequest(conversation, [before].concat(after)));
+    // });
   }
 }

@@ -1,5 +1,5 @@
 import ACTIONS from '../actions/action.types';
-import { newFromMessage } from '../actions/conversation.actions';
+import { newFromMessage, removed } from '../actions/conversation.actions';
 
 export function isNewConversation(message, conversations) {
   return !conversations[message.from];
@@ -14,6 +14,14 @@ const conversationsMiddle = store => next => (action) => {
         if (isNewConversation(action, conversations)) {
           store.dispatch(newFromMessage(action));
         }
+      }, 0);
+      break;
+    case ACTIONS.CONVERSATIONS_LIST.REMOVE_REQUEST:
+      setTimeout(() => {
+        let update;
+        update = Object.assign({}, store.getState().conversations);
+        action.conversations.forEach(id => delete update[id]);
+        store.dispatch(removed(update, action.conversations));
       }, 0);
       break;
     default:
