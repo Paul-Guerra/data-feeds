@@ -1,14 +1,13 @@
 import JobQueue from './job-queue';
 
 export default class UniqueJobQueue extends JobQueue {
-  constructor() {
+  constructor(types) {
     super();
     this.names = new Set();
-    this.buffer = {
-      add: [],
-      remove: [],
-      bringToTop: []
-    };
+    this.buffer = {};
+    types.forEach((type) => {
+      this.buffer[type] = [];
+    });
   }
 
   enqueue(name, item, job) {
