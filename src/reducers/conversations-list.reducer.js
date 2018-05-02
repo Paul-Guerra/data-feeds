@@ -7,6 +7,7 @@ export default (state = INITIAL_STATE, action) => {
 
   switch (action.type) {
     case ACTIONS.CONVERSATIONS_LIST.ADD_BATCH:
+      // console.log('[Conversations List Reducer] updating');
       newState = Array.from(new Set(action.conversations.concat(state)));
       break;
     case ACTIONS.CONVERSATIONS_LIST.SORT:

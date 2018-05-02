@@ -10,6 +10,8 @@ export function conversationsList(conversations, list) {
 }
 
 export default function ActiveConversations({ conversations, list }) {
+  console.log('[ActiveConversations] rendering', list.length);
+  
   return (
     <div>
       active conversation list goes here

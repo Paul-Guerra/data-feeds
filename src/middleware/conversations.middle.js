@@ -1,20 +1,20 @@
 import ACTIONS from '../actions/action.types';
-import { newFromMessage } from '../actions/conversation.actions';
+// import { newFromMessage } from '../actions/conversation.actions';
+import ConversationsManager from '../services/conversations.service';
+
+const convoManager = new ConversationsManager();
 
 export function isNewConversation(message, conversations) {
   return !conversations[message.from];
 }
 
 const conversationsMiddle = store => next => (action) => {
-  let { conversations } = store.getState();
   switch (action.type) {
     case ACTIONS.MESSAGE.NEW:
     case ACTIONS.MESSAGE.ARCHIVE:
-      setTimeout(() => {
-        if (isNewConversation(action, conversations)) {
-          store.dispatch(newFromMessage(action));
-        }
-      }, 0);
+      if (isNewConversation(action, store.getState().conversations)) {
+        convoManager.onNewMessage(action, store.dispatch);
+      }
       break;
     default:
       break;
