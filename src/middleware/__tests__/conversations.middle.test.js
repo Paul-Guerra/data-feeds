@@ -2,9 +2,9 @@
 
 import conversations, { isNewConversation } from '../conversations.middle';
 import ACTIONS from '../../actions/action.types';
-import { newFromMessage } from '../../actions/conversation.actions';
+import { newFromMessage } from '../../actions/conversations.actions';
 
-jest.mock('../../actions/conversation.actions');
+jest.mock('../../actions/conversations.actions');
 jest.useFakeTimers();
 
 let stateConversations = { foo: { id: 'foo', name: 'foo bar', contacts: ['contact-id'] } };

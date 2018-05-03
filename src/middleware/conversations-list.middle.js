@@ -31,11 +31,10 @@ const conversationsListMiddle = store => next => (action) => {
     //   // enque conversation list item to be created
     //   listManager.onNewConversation(action.id, store.dispatch);
     //   break;
-    
-    case ACTIONS.CONVERSATION.ADD_BATCH:
+    case ACTIONS.CONVERSATIONS.ADD_BATCH:
       listManager.onNewConversationBatch(action.conversations, store.dispatch);
       break;
-    case ACTIONS.CONVERSATION.REMOVED:
+    case ACTIONS.CONVERSATIONS.REMOVED:
       // listManager.onRemoveConversation(action.id, conversationsList, store.dispatch);
       break;
     case ACTIONS.CONVERSATIONS_LIST.ADD:

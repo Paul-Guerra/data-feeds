@@ -1,12 +1,12 @@
 /* global describe, it, expect */
 import ACTIONS from '../action.types';
-import { newFromMessage, newFromContact } from '../conversation.actions';
+import { newFromMessage, newFromContact } from '../conversations.actions';
 
 describe('newFromMessage action', () => {
   it('dispatches a new conversation action', () => {
     let msg = { from: 'foo', name: 'foo bar' };
     let action = newFromMessage(msg);
-    expect(action.type).toBe(ACTIONS.CONVERSATION.NEW);
+    expect(action.type).toBe(ACTIONS.CONVERSATIONS.NEW);
     expect(action.id).toBe(msg.from);
     expect(action.name).toBe(msg.name);
     expect(action.contacts.size).toBe(1);
@@ -18,7 +18,7 @@ describe('newFromContact action', () => {
   it('dispatches a new conversation action', () => {
     let contact = { id: 'foo-bar', name: 'foo bar' };
     let action = newFromContact(contact);
-    expect(action.type).toBe(ACTIONS.CONVERSATION.NEW);
+    expect(action.type).toBe(ACTIONS.CONVERSATIONS.NEW);
     expect(action.id).toBe(contact.id);
     expect(action.name).toBe(contact.name);
     expect(action.contacts.size).toBe(1);

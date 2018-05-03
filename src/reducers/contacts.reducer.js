@@ -37,7 +37,7 @@ export default (state = INITIAL_STATE, action) => {
       data = newContactStateObject(action);
       newState = Object.assign({}, state, data);
       break;
-    case ACTIONS.CONVERSATION.NEW:
+    case ACTIONS.CONVERSATIONS.NEW:
       // todo: create a bulk  new/update contact action and move
       // looping to an async job so the reducer does not loop
       // and makes the update with a single operation

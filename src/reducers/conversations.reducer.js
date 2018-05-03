@@ -7,7 +7,7 @@ export default (state = INITIAL_STATE, action) => {
 
   let data = {};
   switch (action.type) {
-    // case ACTIONS.CONVERSATION.NEW:
+    // case ACTIONS.CONVERSATIONS.NEW:
     //   // console.log('[Conversations Reducer] updating');
     
     //   data[action.id] = {
