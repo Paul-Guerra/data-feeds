@@ -21,7 +21,7 @@ describe('conversations reducer', () => {
   it('appends object to state on new conversation action', () => {
     let initialState = {};
     let action = {
-      type: ACTIONS.CONVERSATION.NEW,
+      type: ACTIONS.CONVERSATIONS.NEW,
       id: 12345,
       name: 'foo',
       contacts: new Set([67890])

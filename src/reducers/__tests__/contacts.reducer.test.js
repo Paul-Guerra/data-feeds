@@ -42,7 +42,7 @@ describe('contacts reducer', () => {
     let contactId = 'foo';
     let initialState = { foo: { id: 'foo', name: 'foo contact', conversations: new Set(['bar']) } };
     let action = {
-      type: ACTIONS.CONVERSATION.NEW,
+      type: ACTIONS.CONVERSATIONS.NEW,
       id: 12345,
       name: 'bar-convo',
       contacts: new Set([contactId])
@@ -59,7 +59,7 @@ describe('contacts reducer', () => {
     let contactId = 'foo';
     let initialState = {};
     let action = {
-      type: ACTIONS.CONVERSATION.NEW,
+      type: ACTIONS.CONVERSATIONS.NEW,
       id: 12345,
       name: 'bar-convo',
       contacts: new Set([contactId])
@@ -78,7 +78,7 @@ describe('updateContactConvos', () => {
     let contactId = 'foo';
     let initialState = { foo: { id: 'foo', name: 'foo contact', conversations: new Set(['bar']) } };
     let action = {
-      type: ACTIONS.CONVERSATION.NEW,
+      type: ACTIONS.CONVERSATIONS.NEW,
       id: 12345,
       name: 'bar-convo',
       contacts: new Set([contactId])
@@ -95,7 +95,7 @@ describe('updateContactConvos', () => {
     let contactId = 'foo';
     let initialState = {};
     let action = {
-      type: ACTIONS.CONVERSATION.NEW,
+      type: ACTIONS.CONVERSATIONS.NEW,
       id: 12345,
       name: 'bar-convo',
       contacts: new Set([contactId])

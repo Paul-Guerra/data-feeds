@@ -27,11 +27,11 @@ const conversationsListMiddle = store => next => (action) => {
       //   listManager.onNewMessage(contact.conversations, conversationsList, store.dispatch);
       // }
       break;
-    case ACTIONS.CONVERSATION.NEW:
+    case ACTIONS.CONVERSATIONS.NEW:
       // enque conversation list item to be created
       listManager.onNewConversation(action.id, store.dispatch);
       break;
-    case ACTIONS.CONVERSATION.REMOVED:
+    case ACTIONS.CONVERSATIONS.REMOVED:
       // listManager.onRemoveConversation(action.id, conversationsList, store.dispatch);
       break;
     case ACTIONS.CONVERSATIONS_LIST.ADD:

@@ -7,7 +7,7 @@ export default (state = INITIAL_STATE, action) => {
 
   let data = {};
   switch (action.type) {
-    case ACTIONS.CONVERSATION.NEW:
+    case ACTIONS.CONVERSATIONS.NEW:
       data[action.id] = {
         id: action.id,
         name: action.name,

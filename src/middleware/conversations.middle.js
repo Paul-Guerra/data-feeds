@@ -1,5 +1,5 @@
 import ACTIONS from '../actions/action.types';
-import { newFromMessage } from '../actions/conversation.actions';
+import { newFromMessage } from '../actions/conversations.actions';
 
 export function isNewConversation(message, conversations) {
   return !conversations[message.from];
