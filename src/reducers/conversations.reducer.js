@@ -17,7 +17,7 @@ export default (state = INITIAL_STATE, action) => {
     //   };
     //   newState = Object.assign({}, state, data);
     //   break;
-    case ACTIONS.CONVERSATION.ADD_BATCH:
+    case ACTIONS.CONVERSATIONS.ADD_BATCH:
       newState = Object.assign({}, state, ...action.conversations);
       break;
     default:

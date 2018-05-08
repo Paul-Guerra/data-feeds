@@ -34,7 +34,7 @@ export function addBatch(data) {
     conversations = [data];
   }
   return {
-    type: ACTIONS.CONVERSATION.ADD_BATCH,
+    type: ACTIONS.CONVERSATIONS.ADD_BATCH,
     conversations
   };
 }
