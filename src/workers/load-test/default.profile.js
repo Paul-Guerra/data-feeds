@@ -6,7 +6,7 @@ import makeRandomName from './name-generator';
 let uniqueNames = new Set();
 export default function run(dispatch) {
   let contacts = [];
-  for (let i = 0; i < 100; i += 1) {
+  for (let i = 0; i < 1000; i += 1) {
     let name = makeRandomName();
     while (uniqueNames.has(name)) {
       name = makeRandomName();
