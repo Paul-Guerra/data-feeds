@@ -1,5 +1,4 @@
 import ACTIONS from '../actions/action.types';
-// import { newFromMessage } from '../actions/conversations.actions';
 import ConversationsManager from '../services/conversations.service';
 
 const convoManager = new ConversationsManager();
