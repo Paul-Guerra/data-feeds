@@ -7,13 +7,18 @@ export default (state = INITIAL_STATE, action) => {
 
   let data = {};
   switch (action.type) {
-    case ACTIONS.CONVERSATIONS.NEW:
-      data[action.id] = {
-        id: action.id,
-        name: action.name,
-        contacts: new Set(action.contacts),
-      };
-      newState = Object.assign({}, state, data);
+    // case ACTIONS.CONVERSATIONS.NEW:
+    //   // console.log('[Conversations Reducer] updating');
+    
+    //   data[action.id] = {
+    //     id: action.id,
+    //     name: action.name,
+    //     contacts: new Set(action.contacts),
+    //   };
+    //   newState = Object.assign({}, state, data);
+    //   break;
+    case ACTIONS.CONVERSATIONS.ADD_BATCH:
+      newState = Object.assign({}, state, ...action.conversations);
       break;
     default:
       newState = state;

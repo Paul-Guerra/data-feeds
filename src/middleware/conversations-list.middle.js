@@ -2,7 +2,7 @@ import throttle from 'lodash.throttle';
 import ACTIONS from '../actions/action.types';
 import { addBatch } from '../actions/conversations-list.actions';
 import bringToTop from '../sorters/top.sorter';
-import ConversationsListManager from '../services/list-manager.service';
+import ConversationsListManager from '../services/conversations-list.service';
 
 let listManager = new ConversationsListManager(bringToTop);
 let listAddBuffer = [];
@@ -27,9 +27,12 @@ const conversationsListMiddle = store => next => (action) => {
       //   listManager.onNewMessage(contact.conversations, conversationsList, store.dispatch);
       // }
       break;
-    case ACTIONS.CONVERSATIONS.NEW:
-      // enque conversation list item to be created
-      listManager.onNewConversation(action.id, store.dispatch);
+    // case ACTIONS.CONVERSATION.NEW:
+    //   // enque conversation list item to be created
+    //   listManager.onNewConversation(action.id, store.dispatch);
+    //   break;
+    case ACTIONS.CONVERSATIONS.ADD_BATCH:
+      listManager.onNewConversationBatch(action.conversations, store.dispatch);
       break;
     case ACTIONS.CONVERSATIONS.REMOVED:
       // listManager.onRemoveConversation(action.id, conversationsList, store.dispatch);
