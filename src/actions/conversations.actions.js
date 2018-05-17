@@ -30,19 +30,25 @@ export function newFromContact(contact) {
 
 export function addBatch(data) {
   let conversations = data;
-  if (!(data instanceof Array)) {
-    conversations = [data];
-  }
+  if (!(data instanceof Array)) conversations = [data];
   return {
     type: ACTIONS.CONVERSATIONS.ADD_BATCH,
     conversations
   };
 }
 
-export function removed(update, conversations) {
+export function removeRequest(id) {
+  // let conversations = ids;
+  // if (!(ids instanceof Array)) conversations = [ids];
+  return {
+    type: ACTIONS.CONVERSATIONS.REMOVE_REQUEST,
+    id
+  };
+}
+
+export function removed(id) {
   return {
     type: ACTIONS.CONVERSATIONS.REMOVED,
-    conversations,
-    update
+    id
   };
 }

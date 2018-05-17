@@ -15,6 +15,9 @@ const conversationsMiddle = store => next => (action) => {
         convoManager.onNewMessage(action, store.dispatch);
       }
       break;
+    case ACTIONS.CONVERSATIONS.REMOVE_REQUEST:
+      convoManager.onRemoveRequest(action.id, store.dispatch);
+      break;
     default:
       break;
   }

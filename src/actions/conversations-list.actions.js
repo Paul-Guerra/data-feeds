@@ -22,15 +22,6 @@ export function remove(id) {
   };
 }
 
-export function removeRequest(ids) {
-  let conversations = ids;
-  if (!(ids instanceof Array)) conversations = [ids];
-  return {
-    type: ACTIONS.CONVERSATIONS_LIST.REMOVE_REQUEST,
-    conversations
-  };
-}
-
 export function addBatch(conversations) {
   return {
     type: ACTIONS.CONVERSATIONS_LIST.ADD_BATCH,
