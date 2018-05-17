@@ -13,7 +13,7 @@ export default function ActiveConversations({ conversations, list, remove }) {
   return (
     <div>
       active conversation list goes here
-      <ol>
+      <ol style={{ display: 'flex', flexDirection: 'column-reverse' }}>
         {conversationsList(conversations, list, remove)}
       </ol>
     </div>
