@@ -1,7 +1,8 @@
 
 export default class JobQueue {
-  constructor() {
+  constructor(wait = 0) {
     this.jobs = [];
+    this.wait = wait;
   }
 
   enqueue(job) {
@@ -20,7 +21,7 @@ export default class JobQueue {
         console.error(error);
         this.nextJob();
       }
-    }, 0);
+    }, this.wait);
   }
 
   dequeue() {

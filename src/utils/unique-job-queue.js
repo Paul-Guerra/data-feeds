@@ -1,8 +1,8 @@
 import JobQueue from './job-queue';
 
 export default class UniqueJobQueue extends JobQueue {
-  constructor(types) {
-    super();
+  constructor(types, wait = 0) {
+    super(wait);
     this.names = new Set();
     this.buffer = {};
     types.forEach((type) => {
